@@ -76,7 +76,10 @@ class GL:
 		new_map = []
 		for (_, y, val) in self.map:
 			runningx += scaling_function(runningx, y, val)
-			new_map.append(newpt(runningx, y, val))
+			try:
+				new_map.append(newpt(runningx, y, val))
+			except:
+				pass
 			self._diffmap.append(runningx - self.startx)
 		self.startx = new_map[0][0]
 		self.map = new_map
@@ -85,16 +88,17 @@ class GL:
 		self._cascade(1, scaling_function, **kwargs)
 		self._cascade(0, scaling_function, **kwargs)
 
-	def _cascade(self, direction, scaling_function, damping_decay=0, _counter=0, **kwargs):
-		_counter+=1
-		if 'damping' in kwargs:
-			kwargs['damping'] *= np.exp(-1 * damping_decay * _counter)
-		if 'scaling_factor' in kwargs:
-			kwargs['scaling_factor'] *= np.exp(-1 * damping_decay * _counter)
-
+	def _cascade(self, direction, scaling_function, damping_decay=0, _counter=[0, 0], **kwargs):
 		nline = self._neighbours[direction]
-		if nline is None or self._diffmap == []:
+		if nline is None:
 			return
+		_counter[direction]+=1
+		if 'damping' in kwargs:
+			kwargs['damping'] *= np.exp(-1 * damping_decay * _counter[direction])
+		if 'scaling_factor' in kwargs:
+			kwargs['scaling_factor'] *= np.exp(-1 * damping_decay * _counter[direction])
+
+
 		nline._apply_diffmap(self._diffmap, direction, scaling_function, **kwargs)
 		nline._cascade(direction, scaling_function, _counter=_counter, **kwargs)
 

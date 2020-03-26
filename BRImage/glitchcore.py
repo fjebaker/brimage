@@ -58,6 +58,7 @@ class GOverlay(_Image):
 		gls[0].assign_neighbours(None, gls[1])
 		for i in range(1, len(gls)-1):
 			gls[i].assign_neighbours(gls[i-1], gls[i+1])
+		gls[-1].assign_neighbours(gls[-2], None)
 
 		self._glines = gls
 

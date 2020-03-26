@@ -3,4 +3,4 @@ Glitch art servlet. Python backend for manipulating images to create glitch-art 
 
 Sample image:
 
-![Louis Theroux](https://github.com/Dustpancake/BRImage/blob/master/sample-output.jpg)
+![Louis Theroux](https://github.com/Dustpancake/BRImage/blob/master/sample-glitch.jpg)

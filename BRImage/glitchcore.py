@@ -13,8 +13,8 @@ class _Image:
 	def __init__(self):
 		pass
 
-	def show(self, ax):
-		ax.imshow(self._image)
+	def show(self, ax, **kwargs):
+		ax.imshow(self._image, **kwargs)
 
 	def map_distort_all(self, scaling_function):
 		for i in self._glines:

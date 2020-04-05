@@ -1,7 +1,7 @@
 import PIL
 import skimage
 from BRImage.glitchcore import _Image, Schema
-from BRImage.overlays import LinearOverlay
+from BRImage.overlays import LinearOverlay, FourierOverlay
 
 class GImage(_Image):
 	def __init__(self, path, ncolors=4):
@@ -18,6 +18,9 @@ class GImage(_Image):
 	def linear_overlay(self, **kwargs):
 		return LinearOverlay(self, self.width, self.height, **kwargs)
 
+	def fourier_overlay(self, **kwargs):
+		return FourierOverlay(self, self.width, self.height, **kwargs)
+
 	def get_default_schema(self):
 		return Schema(self._reduced_im.convert('RGB'))
 
@@ -29,3 +32,6 @@ class GImage(_Image):
 
 	def show_reduced(self, ax):
 		ax.imshow(self._reduced_im)
+
+	def get_image(self):
+		return self._image

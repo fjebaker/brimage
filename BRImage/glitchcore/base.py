@@ -1,9 +1,14 @@
+import matplotlib
+
 class _Image:
 	def __init__(self):
 		pass
 
 	def show(self, ax, **kwargs):
 		ax.imshow(self._image, **kwargs)
+
+	def save(self, name, **kwargs):
+		matplotlib.image.imsave(name, self._image, **kwargs)
 
 	def map_distort_all(self, scaling_function):
 		for i in self._glines:

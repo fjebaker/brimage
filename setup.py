@@ -1,4 +1,5 @@
 from setuptools import setup, Extension
+from BRImage import VERSION
 import os
 
 algorithms = Extension(
@@ -17,7 +18,7 @@ with open('README.md', 'r') as f:
 
 setup(
 	name='BRImage',
-	version='0.1.0',
+	version=VERSION,
 	description='Glitch ART Toolkit mimicking CRT monitor defects.',
 	long_description=long_description,
 	long_description_content_type="text/markdown",

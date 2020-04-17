@@ -3,16 +3,7 @@ import argparse
 import os
 
 from BRImage.glitchimage import *
-
-
-HEADER = r"""'||'''|,  '||'''|, |''||''|                                  
- ||   ||   ||   ||    ||                                     
- ||;;;;    ||...|'    ||    '||),,(|,   '''|.  .|''|, .|''|, 
- ||   ||   || \\      ||     || || ||  .|''||  ||  || ||..|| 
-.||...|'  .||  \\. |..||..| .||    ||. `|..||. `|..|| `|...  
-                                                   ||    v0.1.0      
-                                                `..|'
-"""
+from BRImage import VERSION, HEADER
 
 def run_fm(path, omega, phase, lowpass, output_file):
 	""" run frequency modulation cli script """
@@ -25,7 +16,7 @@ def run_fm(path, omega, phase, lowpass, output_file):
 
 def process_args():
 	""" process the arguments using argparse """
-	parser = argparse.ArgumentParser(description="CLI for BRImage library a1.2\nOnly implements frequency modulation at time of writing.", formatter_class=argparse.RawTextHelpFormatter)
+	parser = argparse.ArgumentParser(description=f"CLI for BRImage library {VERSION}\nOnly implements frequency modulation at time of writing.", formatter_class=argparse.RawTextHelpFormatter)
 	parser.add_argument('input_image', type=str, nargs=1, help="Input image path; most common formats are accepted.")
 	parser.add_argument('--omega', type=float, default=[0.3], nargs=1, help="Frequency omega; controls line spacing. \n - range: 0.0 to 1.0 \n - >1.0 also works, but ugly.")
 	parser.add_argument('--phase', type=float, default=[0.5], nargs=1, help="Controls the phase range that is used to map the pixel values into. \n - higher values distort the image more. \n - range: 0.0 to 1.0")

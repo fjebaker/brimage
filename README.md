@@ -3,7 +3,7 @@ Glitch art servlet. Python backend for manipulating images to create glitch-art 
 
 One-liner install
 ```
-pip install BRImage==0.1.0 && brimage -h
+pip install BRImage==0.1.1 && brimage -h
 ```
 
 <!--BEGIN TOC-->
@@ -21,9 +21,9 @@ brimage -h
 ```
 
 ### pypi <a name="toc-sub-tag-1"></a>
-I've made the project available with `pip` (you can view the project [here](https://pypi.org/project/BRImage/0.1.0/)):
+I've made the project available with `pip` (you can view the project [here](https://pypi.org/project/BRImage/0.1.1/)):
 ```
-pip install BRImage==0.1.0
+pip install BRImage==0.1.1
 ```
 
 ### git <a name="toc-sub-tag-2"></a>

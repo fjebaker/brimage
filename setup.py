@@ -4,11 +4,11 @@ import os
 algorithms = Extension(
 	'algorithms', 
 	sources=[
-		os.path.join('BRImage', 'lib', 'br_algorithms.c'),
-		os.path.join('BRImage', 'lib', 'freqmod.c')
+		os.path.join('BRImage', 'clib', 'br_algorithms.c'),
+		os.path.join('BRImage', 'clib', 'freqmod.c')
 	],
 	include_dirs = [
-		os.path.join('BRImage', 'lib')
+		os.path.join('BRImage', 'clib')
 	]
 )
 

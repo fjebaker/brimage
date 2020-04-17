@@ -3,6 +3,7 @@ from scipy.signal import butter, filtfilt, freqz
 
 from BRImage.overlays.glitch import GOverlay
 from BRImage.glitchcore import remap
+from __brimage_lib.algorithms import freqmod_row
 
 def _butter_lowpass(cutoff, fs, order=5):
 	""" calculates the butterworth lowpass filter """
@@ -48,7 +49,8 @@ class FreqModOverlay(GOverlay):
 		""" applies the FM algorithm to a specific channel """
 		new_channel = []
 		for row in channel:
-			row = self._map_row(row)
+			row = freqmod_row(row, self.width, self.max_phase, self.omega)
+			# row = self._map_row(row)
 			if lowpass > 0:
 				row = self._lowpass(row, lowpass)
 			new_channel.append(

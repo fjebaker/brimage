@@ -4,7 +4,7 @@ Glitch art servlet. Python backend for manipulating images to create glitch-art 
 ## Installation and use
 Requires Python3. First, clone the repository
 ```bash
-git clone https://github.com/Dustpancake/BRImage
+git clone https://github.com/Dustpancake/BRImage && cd BRImage
 ```
 It is recommended to use a *virtual environment*
 ```bash
@@ -28,6 +28,6 @@ python run.py
 
 ## Sample image:
 
-Input Image            |  OutputImage
+Input Image            |  Output Image
 :-------------------------:|:-------------------------:
 ![](https://github.com/Dustpancake/BRImage/blob/master/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/sample-glitch.jpg)

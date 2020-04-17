@@ -19,7 +19,7 @@ with open('README.md', 'r') as f:
 setup(
 	name='BRImage',
 	version=VERSION,
-	description='Glitch ART Toolkit mimicking CRT monitor defects.',
+	description='Glitch Art Toolkit mimicking CRT monitor defects.',
 	long_description=long_description,
 	long_description_content_type="text/markdown",
 	author='Dustpancake',
@@ -39,7 +39,8 @@ setup(
 		'numpy==1.18.2',
 		'scipy==1.4.1',
 		'matplotlib==3.2.1',
-		'Pillow==7.1.1'
+		'Pillow==7.1.1',
+		'wheel==0.34.2'
 	],
 	ext_package='__brimage_lib',
 	ext_modules=[

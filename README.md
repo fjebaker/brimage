@@ -1,13 +1,32 @@
 # BRImage
 Glitch art servlet. Python backend for manipulating images to create glitch-art effects inspired by CRT monitors.
 
-## Now available on Pypi
+One-liner install
+```
+pip install BRImage==0.1.0 && brimage -h
+```
+
+<!--BEGIN TOC-->
+## Table of Contents
+1. [Installation and use](#toc-sub-tag-0)
+	1. [pypi](#toc-sub-tag-1)
+	2. [git](#toc-sub-tag-2)
+2. [Sample image:](#toc-sub-tag-3)
+<!--END TOC-->
+
+## Installation and use <a name="toc-sub-tag-0"></a>
+BRImage now comes with a very minimal command line interface, usable with
+```
+brimage -h
+```
+
+### pypi <a name="toc-sub-tag-1"></a>
 I've made the project available with `pip` (you can view the project [here](https://pypi.org/project/BRImage/0.1.0/)):
 ```
 pip install BRImage==0.1.0
 ```
 
-## Installation and use
+### git <a name="toc-sub-tag-2"></a>
 Requires Python3. First, clone the repository
 ```bash
 git clone https://github.com/Dustpancake/BRImage && cd BRImage
@@ -32,7 +51,7 @@ To run, edit `run.py` to setup a BRImage overlay pipeline (docs and examples com
 python run.py
 ```
 
-## Sample image:
+## Sample image: <a name="toc-sub-tag-3"></a>
 
 Input Image            |  Output Image
 :-------------------------:|:-------------------------:

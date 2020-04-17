@@ -1,4 +1,4 @@
-import matplotlib
+import matplotlib.image
 
 class _Image:
 	def __init__(self):

@@ -50,8 +50,7 @@ class FreqModOverlay(GOverlay):
 		new_channel = []
 		for row in channel:
 			row = freqmod_row(row, self.width, self.max_phase, self.omega)
-			# row = self._map_row(row)
-			if lowpass > 0:
+			if lowpass > 0.000001:	# float comparsison check
 				row = self._lowpass(row, lowpass)
 			new_channel.append(
 				row
@@ -80,31 +79,6 @@ class FreqModOverlay(GOverlay):
 		self.max_phase = phase
 		self.min_phase = -phase
 		self.quantization = quantization
-
-	def _map_row(self, row):
-		""" maps the modulation onto a single row """
-		integral = 0
-		running_mod = 0
-		min_phase, max_phase = self.min_phase, self.max_phase
-		quantization = self.quantization
-		omega = self.omega
-
-		new_row = []
-		for i, x in enumerate(row):
-			phase = remap(x, 0, 255, min_phase, max_phase)
-			integral += phase
-
-			mod = np.cos((omega * i + integral) * 0.5)
-			if quantization != 0:
-				mod = np.round_(remap(mod, -1, 1, 0, quantization))
-				mod = remap(mod, 0, quantization, -1, 1)
-
-			demod = np.abs(mod - running_mod)
-			running_mod = mod
-
-			v = remap(2 * (demod - omega), min_phase, max_phase, 0, 255)
-			new_row.append(v)
-		return new_row
 
 	def post_quantize(self, quant):
 		""" apply quantization after the image has been generated """

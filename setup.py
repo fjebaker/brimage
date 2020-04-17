@@ -23,6 +23,11 @@ setup(
 	long_description_content_type="text/markdown",
 	author='Dustpancake',
 	url='https://github.com/Dustpancake/BRImage',
+	entry_points={
+	    'console_scripts': [
+	        'brimage = BRImage.__main__:main',
+	    	],
+	},
 	packages=[
 		'BRImage', 
 		'BRImage.glitchcore', 

@@ -1,14 +1,17 @@
-import PIL
-import skimage
 from BRImage.glitchcore import _Image, Schema
 from BRImage.overlays import LinearOverlay, FourierOverlay, FreqModOverlay
+
+try:
+    import Image as PILImage
+except ImportError:
+    from PIL import Image as PILImage
 
 class GImage(_Image):
 	def __init__(self, path, ncolors=4):
 		self._path = path
-		image = PIL.Image.open(path)
+		image = PILImage.open(path)
 		self._image = image.convert('RGB')
-		self._reduced_im = image.convert('P', palette=PIL.Image.ADAPTIVE, colors=ncolors)
+		self._reduced_im = image.convert('P', palette=PILImage.ADAPTIVE, colors=ncolors)
 
 		self._ncolors = ncolors
 		self.width, self.height = self._image.size

@@ -50,5 +50,6 @@ setup(
 		"License :: OSI Approved :: MIT License",
 		"License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
 	],
+	python_requires=">=3.7",
 	zip_safe=False
 )

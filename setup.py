@@ -25,10 +25,10 @@ setup(
 		'BRImage.overlays.structures'
 	],
 	install_requires=[
-		'numpy==1.18.2',
-		'scikit-image==0.16.2',
+		'numpy==1.18.2',,
 		'scipy==1.4.1',
-		'matplotlib==3.2.1'
+		'matplotlib==3.2.1',
+		'Pillow==7.1.1'
 	],
 	ext_package='__brimage_lib',
 	ext_modules=[

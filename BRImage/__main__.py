@@ -5,12 +5,14 @@ import os
 from BRImage.glitchimage import *
 from BRImage import VERSION, HEADER
 
-def run_fm(path, omega, phase, lowpass, output_file):
+def run_fm(path, omega, phase, lowpass, pquant, output_file):
 	""" run frequency modulation cli script """
 	gi = GImage(path)
 	print("[+] {}".format(gi))
 	fm = gi.freqmod_overlay(rinit=0, ginit=0, binit=0)
 	fm.map_freq_modulation(omega=omega, phase=phase, lowpass=lowpass)
+	if pquant > 0:
+		fm.post_quantize(pquant)
 	fm.save(output_file)
 	print("[+] written output image to '{}'".format(output_file))
 
@@ -22,6 +24,7 @@ def process_args():
 	parser.add_argument('--phase', type=float, default=[0.5], nargs=1, help="Controls the phase range that is used to map the pixel values into. \n - higher values distort the image more. \n - range: 0.0 to 1.0")
 	parser.add_argument('--lowpass', type=float, default=[0], nargs=1, help="Set the lowpass filter amount. \n - lower values blur out fine detail more. \n - set to 0 disables the filter. \n - preconfigured to 30Hz sample rate. \n - range: 0.0 to 1.0.")
 	parser.add_argument('-o', '--output_file', nargs=1, type=str, default=["output.jpg"], help="Output image path\n - default 'output.jpg'")
+	parser.add_argument('--pquantize', type=int, default=[0], nargs=1, help="Post-quantize number; \n - integer number of colours to quantize image to \n   after frequency modulation \n - range: >=0 \n - value of 0 disables post-quantize")
 
 	return parser.parse_args()
 
@@ -41,11 +44,13 @@ def main():
 	omega = args.omega[0]
 	phase = args.phase[0]
 	lowpass = args.lowpass[0]
+	pquant = args.pquantize[0]
 	output_file = args.output_file[0]
+
 
 	check_file_exists(file)
 	print("[+] starting frequency modulation process...")
-	run_fm(file, omega, phase, lowpass, output_file)
+	run_fm(file, omega, phase, lowpass, pquant, output_file)
 	print("[+] done")
 
 if __name__ == '__main__':

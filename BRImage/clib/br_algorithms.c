@@ -1,7 +1,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-#include "freqmod.h"
+#include <freqmod.h>
 
 static PyMethodDef brimage_methods[] = {
 	{ 

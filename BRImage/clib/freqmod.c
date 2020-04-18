@@ -1,4 +1,4 @@
-#include "freqmod.h"
+#include <freqmod.h>
 
 #include <math.h>
 #include <stdio.h>

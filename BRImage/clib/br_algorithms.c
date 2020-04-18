@@ -7,9 +7,6 @@ static PyMethodDef brimage_methods[] = {
 	{ 
 		"freqmod_row", freqmod_row, METH_VARARGS, "Applies frequency modulation to a single row."
 	},
-	{
-		"testfunc", test_func, METH_VARARGS, "Testfunc."
-	},
 	{NULL, NULL, 0, NULL},
 };
 

@@ -1,4 +1,15 @@
-import matplotlib.image
+import numpy as np
+
+try:
+    import Image as PILImage
+except ImportError:
+    from PIL import Image as PILImage
+
+
+def remap(x, s1, s2, d1, d2):
+	""" helper functio: remaps x in range s1-s2 into d1-d2 """
+	return (((x-s1)/(s2-s1)) * (d2-d1)) + d1
+
 
 class _Image:
 	def __init__(self):
@@ -8,7 +19,10 @@ class _Image:
 		ax.imshow(self._image, **kwargs)
 
 	def save(self, name, **kwargs):
-		matplotlib.image.imsave(name, self._image, **kwargs)
+		im=PILImage.fromarray(np.uint8(self._image))
+		im.save(name)
+
+		#matplotlib.image.imsave(name, self._image, **kwargs)
 
 	def map_distort_all(self, scaling_function):
 		for i in self._glines:

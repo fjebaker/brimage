@@ -1,29 +1,14 @@
 #include <freqmod.h>
 
 #include <math.h>
-#include <stdio.h>
-
-PyObject* array_to_list(double array[], int length) {
-	PyObject* list = PyList_New(length);
-	for (int i = 0; i < length; i++) {
-		// printf("i = %d; index = %lf\n", i, array[i]);
-		PyList_SetItem(list, i, PyFloat_FromDouble(array[i]));
-	}
-	return list;
-}
-
-PyObject* test_func(PyObject* self, PyObject* args) {
-	double array[] = {1, 2, 3, 4, 6};
-
-	PyObject* list = array_to_list(array, 5);
-	return list;
-}
 
 double remap(double x, double s1, double s2, double d1, double d2) {
+	/* remaps x in range s1 to s2, into d1 to d2 */
 	return (((x - s1) * (d2 - d1)) / (s2 - s1)) + d1;
 }
 
 PyObject* freqmod_row(PyObject* self, PyObject* args) {
+	/* applies frequency modulation algorithm to a single python row */
 	PyObject* iterator;
 	PyObject* item;
 	PyObject* new_row;

@@ -36,18 +36,18 @@ setup(
 		'BRImage.overlays.structures'
 	],
 	install_requires=[
-		'numpy==1.18.2',
-		'scipy==1.4.1',
-		'matplotlib==3.2.1',
-		'Pillow==7.1.1',
-		'wheel==0.34.2'
+		'numpy>=1.18.2',
+		'scipy>=1.4.1',
+		'Pillow>=7.1.1',
+		'wheel>=0.34.2',
+		'setuptools>=46.1.3'
 	],
 	ext_package='__brimage_lib',
 	ext_modules=[
 		algorithms
 	],
 	 classifiers=[
-		"Programming Language :: Python :: 3",
+		"Programming Language :: Python :: 3.7",
 		"License :: OSI Approved :: MIT License",
 		"License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
 	],

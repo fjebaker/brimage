@@ -85,8 +85,8 @@ class FreqModOverlay(GOverlay):
 		image = np.round_(remap(self._image, 0, 255, 0, quant))
 		self._image = remap(image, 0, quant, 0, 255)
 
-	def save(self, name, **kwargs):
-		if self.grayscale:
-			super().save(name, cmap='gray')
-		else:
-			super().save(name, **kwargs)
+	#def save(self, name, **kwargs):
+	#	if self.grayscale:
+	#		super().save(name, cmap='gray')
+	#	else:
+	#		super().save(name, **kwargs)

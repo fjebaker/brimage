@@ -1,9 +1,3 @@
-from BRImage.glitchcore.base import _Image, remap
-
-class Schema:
-	""" colour schema class """
-	def __init__(self, im):
-		self._im = im
-
-	def __call__(self, x, y):
-		return self._im.getpixel((x, y))
+from BRImage.glitchcore.image import _Image
+from BRImage.glitchcore.helper import remap
+from BRImage.glitchcore.overlaybase import OverlayBase

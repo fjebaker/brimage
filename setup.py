@@ -32,8 +32,7 @@ setup(
 	packages=[
 		'BRImage', 
 		'BRImage.glitchcore', 
-		'BRImage.overlays',
-		'BRImage.overlays.structures'
+		'BRImage.overlays'
 	],
 	install_requires=[
 		'numpy>=1.18.2',

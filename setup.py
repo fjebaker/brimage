@@ -2,15 +2,18 @@ from setuptools import setup, Extension
 from BRImage import VERSION
 import os
 
+import numpy as np
+
 algorithms = Extension(
-	'algorithms', 
+	'BRImage.clib._algorithms',
 	sources=[
-		os.path.join('BRImage', 'clib', 'br_algorithms.c'),
-		os.path.join('BRImage', 'clib', 'freqmod.c')
+		os.path.join('BRImage', 'clib', 'freqmod.cpp'),
+		os.path.join('BRImage', 'clib', 'algorithms_wrap.cxx'),
 	],
 	include_dirs = [
-		os.path.join('BRImage', 'clib')
-	]
+		np.get_include()
+	],
+	language='c++'
 )
 
 with open('README.md', 'r') as f:
@@ -30,9 +33,10 @@ setup(
 	    	],
 	},
 	packages=[
-		'BRImage', 
-		'BRImage.glitchcore', 
-		'BRImage.overlays'
+		'BRImage',
+		'BRImage.glitchcore',
+		'BRImage.overlays',
+		'BRImage.clib'
 	],
 	install_requires=[
 		'numpy>=1.18.2',
@@ -41,11 +45,10 @@ setup(
 		'wheel>=0.34.2',
 		'setuptools>=46.1.3'
 	],
-	ext_package='__brimage_lib',
 	ext_modules=[
 		algorithms
 	],
-	 classifiers=[
+	classifiers=[
 		"Programming Language :: Python :: 3.7",
 		"License :: OSI Approved :: MIT License",
 		"License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

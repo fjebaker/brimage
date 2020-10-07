@@ -2,7 +2,7 @@ import numpy as np
 from scipy.signal import butter, filtfilt, freqz
 
 from BRImage.glitchcore import remap, OverlayBase
-from __brimage_lib.algorithms import freqmod_row
+from BRImage.clib.algorithms import freqmod_row
 
 def _butter_lowpass(cutoff, fs, order=5):
     """ calculates the butterworth lowpass filter """
@@ -68,7 +68,7 @@ class FreqModOverlay(OverlayBase):
 
     def _set_hyper_parameters(self, omega=0.1, phase=0.1, quantization=0, **kwargs):
         """ sets the necessary phase and omega values """
-        omega = remap(omega, 0, 1, 
+        omega = remap(omega, 0, 1,
             2 * np.pi / (0.5 * self.width),
             2 * np.pi / (0.005 * self.width)
         )

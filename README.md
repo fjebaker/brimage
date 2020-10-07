@@ -16,17 +16,24 @@ pip install BRImage && brimage -h
 
 ## Installation and use <a name="toc-sub-tag-0"></a>
 BRImage now comes with a very minimal command line interface, usable with
-```
+```bash
 brimage -h
 ```
 
 ### pypi <a name="toc-sub-tag-1"></a>
 I've made the project available with `pip` (you can view the project [here](https://pypi.org/project/BRImage/)):
-```
+```bash
 pip install BRImage
 ```
 
-### git <a name="toc-sub-tag-2"></a>
+and run with
+```bash
+brimage
+```
+
+### Building from source <a name="toc-sub-tag-2"></a>
+Requires [SWIG](http://swig.org/).
+
 First, clone the repository
 ```bash
 git clone https://github.com/Dustpancake/BRImage && cd BRImage
@@ -37,18 +44,35 @@ It is recommended to use a *virtual environment*
 python3 -m venv venv && source venv/bin/activate
 ```
 
-- Installation
-
-The installation is self contained in `setup.py`
+Generate the SWIG files; for this we require `numpy.i`:
 ```bash
-python setup.py install 
+curl "https://raw.githubusercontent.com/numpy/numpy/master/tools/swig/numpy.i" > BRImage/clib/numpy.i
+```
+Then we generate the `.py` and `.cxx` files with
+```bash
+cd BRImage/clib \
+    && swig -c++ -python -py3 algorithms.i \
+    && cd -
+```
+We then build with
+```bash
+python setup.py build_ext --inplace
 ```
 
+or install into the environment with 
+```bash
+pip install .
+```
 - Running the script
 
-To run, edit `run.py` to setup a BRImage overlay pipeline (docs and examples coming soon), and run
+To run when build from source:
+```bash
+python BRImage
 ```
-python run.py
+
+If installed, use
+```bash
+brimage
 ```
 
 ## Sample image: <a name="toc-sub-tag-3"></a>

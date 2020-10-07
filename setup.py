@@ -1,8 +1,7 @@
 from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext
 from BRImage import VERSION
 import os
-
-import numpy as np
 
 algorithms = Extension(
 	'BRImage.clib._algorithms',
@@ -10,14 +9,20 @@ algorithms = Extension(
 		os.path.join('BRImage', 'clib', 'freqmod.cpp'),
 		os.path.join('BRImage', 'clib', 'algorithms_wrap.cxx'),
 	],
-	include_dirs = [
-		np.get_include()
-	],
 	language='c++'
 )
 
 with open('README.md', 'r') as f:
 	long_description=f.read();
+
+
+class BuildWithNumpy(build_ext):
+    """ build_ext command with numpy headers  """
+    def run(self):
+        import numpy
+
+        self.include_dirs.append(numpy.get_include())
+        build_ext.run(self)
 
 setup(
 	name='BRImage',
@@ -45,6 +50,9 @@ setup(
 		'wheel>=0.34.2',
 		'setuptools>=46.1.3'
 	],
+	cmdclass={
+		'build_ext': BuildWithNumpy
+	},
 	ext_modules=[
 		algorithms
 	],

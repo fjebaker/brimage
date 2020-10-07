@@ -1,3 +1,3 @@
-exclude .gitignore
 exclude BRImage/clib/*.so
+include BRImage/clib/*.hpp
 exclude README.md

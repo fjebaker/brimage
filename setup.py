@@ -1,4 +1,4 @@
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from BRImage import VERSION
 import os
@@ -37,12 +37,7 @@ setup(
 	        'brimage = BRImage.__main__:main',
 	    	],
 	},
-	packages=[
-		'BRImage',
-		'BRImage.glitchcore',
-		'BRImage.overlays',
-		'BRImage.clib'
-	],
+	packages=find_packages(),
 	install_requires=[
 		'numpy>=1.18.2',
 		'scipy>=1.4.1',

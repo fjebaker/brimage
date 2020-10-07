@@ -1,0 +1,3 @@
+exclude .gitignore
+exclude BRImage/clib/*.so
+exclude README.md

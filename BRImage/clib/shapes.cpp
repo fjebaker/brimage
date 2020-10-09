@@ -26,14 +26,14 @@ void Line::trace(Canvas& canvas) const noexcept {
 }
 void Line::trace(Canvas& canvas, unsigned char shade) const noexcept {
   // Bresenham's Line Algorithm
-  int x0 = (int) p1.x,
-      x1 = (int) p2.x,
-      y0 = (int) p1.y,
-      y1 = (int) p2.y;
-  int dx = abs(x1 - x0),
-      dy = -1 * abs(y1 - y0);
-  int sx = x0 < x1 ? 1 : -1,
-      sy = y0 < y1 ? 1 : -1;
+  int x0 = (int) p1.x;
+  int x1 = (int) p2.x;
+  int y0 = (int) p1.y;
+  int y1 = (int) p2.y;
+  int dx = abs(x1 - x0);
+  int dy = -1 * abs(y1 - y0);
+  int sx = x0 < x1 ? 1 : -1;
+  int sy = y0 < y1 ? 1 : -1;
   int err = dx + dy;
 
   while( x0 != x1 && y0 != y1) {

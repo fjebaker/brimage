@@ -16,7 +16,7 @@ algorithms = Extension(
 	],
 	language='c++',
     extra_compile_args=[
-        "-std=c++17", "-O2"
+        "-std=c++17"
     ]
 )
 

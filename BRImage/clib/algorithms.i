@@ -18,8 +18,14 @@
 %apply (unsigned char* INPLACE_ARRAY2, int DIM1, int DIM2) {(PX_TYPE* inplace_arr, int dim1, int dim2)};
 
 %include "freqmod.hpp"
-%include "canvas.hpp"
 %include "randomwalk.hpp"
+
+class Canvas {
+public:
+  Canvas() = default;
+  virtual ~Canvas() = default;
+  void set_inplace_layer(PX_TYPE* inplace_arr, int dim1, int dim2) noexcept ;
+};
 
 %pythoncode %{
 def freqmod(arr, omega, max_phase):

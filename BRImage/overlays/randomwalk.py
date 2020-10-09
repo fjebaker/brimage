@@ -1,4 +1,5 @@
 from BRImage.glitchcore import OverlayBase
+#from BRImage.tempclib.rw import random_walk, Canvas
 from BRImage.clib.algorithms import random_walk, Canvas
 
 import resource
@@ -15,8 +16,13 @@ class RandomWalkOverlay(OverlayBase):
 
     def map_random_walk(self, lines=500):
         # convert to grey scale; colour is TODO
-        reference = np.array(self._gimage.get_image().convert("L"))
-        image = np.array(self._image.convert("L"))
+        self.expand(110)
+        reference = np.array(
+            self._gimage.get_image().convert("L")
+        )
+        image = np.array(
+            self._image.convert("L")
+        )
 
         # lower arrays into clib
         ref_canvas = Canvas()

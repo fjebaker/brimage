@@ -43,7 +43,6 @@ class FreqModOverlay(OverlayBase):
                 image[..., i] = self._apply_to(channel, lowpass)
             self._image = image
 
-
     def _apply_to(self, channel, lowpass):
         """ applies the FM algorithm to a specific channel """
         new_channel = []
@@ -83,3 +82,8 @@ class FreqModOverlay(OverlayBase):
         """ apply quantization after the image has been generated """
         image = np.round_(remap(self._image, 0, 255, 0, quant))
         self._image = remap(image, 0, quant, 0, 255)
+
+    def save(self, name, **kwargs):
+        self._image_to_pil_image()
+        self.expand(50)
+        super().save(name, **kwargs)

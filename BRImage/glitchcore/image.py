@@ -15,5 +15,5 @@ class _Image:
         ax.imshow(self._image, **kwargs)
 
     def save(self, name, **kwargs):
-        im=PILImage.fromarray(np.uint8(self._image))
+        im = PILImage.fromarray(np.uint8(self._image))
         im.save(name)

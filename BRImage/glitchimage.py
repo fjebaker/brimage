@@ -1,5 +1,5 @@
 from BRImage.glitchcore import _Image
-from BRImage.overlays import FreqModOverlay
+from BRImage.overlays import FreqModOverlay, RandomWalkOverlay
 
 try:
     import Image as PILImage
@@ -8,22 +8,16 @@ except ImportError:
 
 class GlitchImage(_Image):
 
-    def __init__(self, path, ncolors=4):
+    def __init__(self, path):
         self._path = path
         image = PILImage.open(path)
         self._image = image.convert('RGB')
-        self._reduced_im = image.convert('P', palette=PILImage.ADAPTIVE, colors=ncolors)
-
-        self._ncolors = ncolors
         self.width, self.height = self._image.size
 
-        self.cols = self._reduced_im.convert('RGB').getcolors(256)
+        #self.cols = self._reduced_im.convert('RGB').getcolors(256)
 
     def __str__(self):
-        return "{}x{} GImage with {} colors".format(self.width, self.height, self._ncolors)
-
-    def show_reduced(self, ax):
-        ax.imshow(self._reduced_im)
+        return "{}x{} GImage".format(self.width, self.height)
 
     def get_image(self):
         return self._image
@@ -31,3 +25,7 @@ class GlitchImage(_Image):
     def freqmod_overlay(self, **kwargs):
         """ frequency modulation overlay getter """
         return FreqModOverlay(self, **kwargs)
+
+    def random_walk_overlay(self, **kwargs):
+        """ frequency modulation overlay getter """
+        return RandomWalkOverlay(self, **kwargs)

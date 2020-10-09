@@ -7,9 +7,17 @@ algorithms = Extension(
 	'BRImage.clib._algorithms',
 	sources=[
 		os.path.join('BRImage', 'clib', 'freqmod.cpp'),
+		os.path.join('BRImage', 'clib', 'randomwalk.cpp'),
+		os.path.join('BRImage', 'clib', 'shapes.cpp'),
+		os.path.join('BRImage', 'clib', 'subcanvas.cpp'),
+		os.path.join('BRImage', 'clib', 'canvas.cpp'),
+		os.path.join('BRImage', 'clib', 'coord.cpp'),
 		os.path.join('BRImage', 'clib', 'algorithms_wrap.cxx'),
 	],
-	language='c++'
+	language='c++',
+    extra_compile_args=[
+        "-std=c++17", "-O2"
+    ]
 )
 
 with open('README.md', 'r') as f:

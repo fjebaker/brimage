@@ -2,16 +2,18 @@
 #define SUBCANVAS_HPP
 
 #include "canvas.hpp"
+#include "configs.hpp"
 
 
 class SubCanvas : public Canvas {
+private:
+  PX_TYPE region[SQ_WIDTH * SQ_WIDTH];
 
 public:
 
-  SubCanvas() = delete ;
-  virtual ~SubCanvas() noexcept override ;
+  SubCanvas() noexcept ;
+  virtual ~SubCanvas() noexcept override = default ;
 
-  SubCanvas(int width, int height) noexcept ;
   void subregion(const Canvas& supercanv, int x0, int x1, int y0, int y1) noexcept ;
 
 };

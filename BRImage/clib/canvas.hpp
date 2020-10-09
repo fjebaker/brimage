@@ -8,10 +8,10 @@ class Canvas {
 
 protected:
 
-  PX_TYPE* layer;
   int width;
   int height;
 
+  PX_TYPE* layer;
   PX_TYPE& index(int x, int y) noexcept ;
 
 public:

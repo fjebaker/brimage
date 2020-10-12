@@ -8,10 +8,10 @@ algorithms = Extension(
     sources=[
         os.path.join('BRImage', 'clib', 'freqmod.cpp'),
         os.path.join('BRImage', 'clib', 'randomwalk.cpp'),
-        os.path.join('BRImage', 'clib', 'shapes.cpp'),
-        os.path.join('BRImage', 'clib', 'subcanvas.cpp'),
-        os.path.join('BRImage', 'clib', 'canvas.cpp'),
-        os.path.join('BRImage', 'clib', 'coord.cpp'),
+        os.path.join('BRImage', 'clib', 'canvas', 'subcanvas.cpp'),
+        os.path.join('BRImage', 'clib', 'canvas', 'canvas.cpp'),
+        os.path.join('BRImage', 'clib', 'shapes', 'coord.cpp'),
+        os.path.join('BRImage', 'clib', 'shapes', 'shapes.cpp'),
         os.path.join('BRImage', 'clib', 'algorithms_wrap.cxx'),
     ],
     language='c++',
@@ -22,15 +22,6 @@ algorithms = Extension(
 
 with open('README.md', 'r') as f:
     long_description=f.read();
-
-
-class BuildWithNumpy(build_ext):
-    """ build_ext command with numpy headers  """
-    def run(self):
-        import numpy
-
-        self.include_dirs.append(numpy.get_include())
-        build_ext.run(self)
 
 setup(
     name='BRImage',
@@ -53,9 +44,6 @@ setup(
         'wheel>=0.34.2',
         'setuptools>=46.1.3'
     ],
-    cmdclass={
-        'build_ext': BuildWithNumpy
-    },
     ext_modules=[
         algorithms
     ],

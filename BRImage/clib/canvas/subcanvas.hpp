@@ -2,7 +2,7 @@
 #define SUBCANVAS_HPP
 
 #include "canvas.hpp"
-#include "configs.hpp"
+#include "../configs.hpp"
 
 
 class SubCanvas : public Canvas {

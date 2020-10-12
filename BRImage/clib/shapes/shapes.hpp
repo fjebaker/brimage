@@ -2,7 +2,7 @@
 #define SHAPES_HPP
 
 #include "coord.hpp"
-#include "canvas.hpp"
+#include "../canvas/canvas.hpp"
 
 #include <cmath>
 

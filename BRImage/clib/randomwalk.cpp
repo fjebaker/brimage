@@ -1,7 +1,7 @@
 #include "randomwalk.hpp"
 
-#include "subcanvas.hpp"
-#include "shapes.hpp"
+#include "canvas/subcanvas.hpp"
+#include "shapes/shapes.hpp"
 
 #include "configs.hpp"
 

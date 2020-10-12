@@ -3,7 +3,7 @@
 %{
     #define SWIG_FILE_WITH_INIT
     #include "freqmod.hpp"
-    #include "canvas.hpp"
+    #include "canvas/canvas.hpp"
     #include "randomwalk.hpp"
 %}
 

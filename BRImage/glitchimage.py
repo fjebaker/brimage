@@ -6,15 +6,15 @@ try:
 except ImportError:
     from PIL import Image as PILImage
 
-class GlitchImage(_Image):
 
+class GlitchImage(_Image):
     def __init__(self, path):
         self._path = path
         image = PILImage.open(path)
-        self._image = image.convert('RGB')
+        self._image = image.convert("RGB")
         self.width, self.height = self._image.size
 
-        #self.cols = self._reduced_im.convert('RGB').getcolors(256)
+        # self.cols = self._reduced_im.convert('RGB').getcolors(256)
 
     def __str__(self):
         return "{}x{} GImage".format(self.width, self.height)

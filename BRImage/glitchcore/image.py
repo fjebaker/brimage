@@ -7,7 +7,6 @@ except ImportError:
 
 
 class _Image:
-
     def __init__(self):
         pass
 

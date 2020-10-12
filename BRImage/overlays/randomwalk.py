@@ -2,26 +2,28 @@ from BRImage.glitchcore import OverlayBase
 from BRImage.clib.algorithms import random_walk, Canvas
 
 import resource
+
+
 def print_memory_usage():
-    print("Memory usage at {} M".format(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1000**2))
+    print(
+        "Memory usage at {} M".format(
+            resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1000 ** 2
+        )
+    )
+
 
 import numpy as np
 
-class RandomWalkOverlay(OverlayBase):
 
+class RandomWalkOverlay(OverlayBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
 
     def map_random_walk(self, lines=500):
         # convert to grey scale; colour is TODO
         self.expand(100)
-        reference = np.array(
-            self._gimage.get_image().convert("L")
-        )
-        image = np.array(
-            self._image.convert("L")
-        )
+        reference = np.array(self._gimage.get_image().convert("L"))
+        image = np.array(self._image.convert("L"))
 
         # lower arrays into clib
         ref_canvas = Canvas()
@@ -31,6 +33,7 @@ class RandomWalkOverlay(OverlayBase):
 
         print_memory_usage()
         import time
+
         start = time.time()
         for i in range(lines):
             print("Drawing lines {}".format(i), end="\r")

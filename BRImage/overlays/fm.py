@@ -4,11 +4,12 @@ from scipy.signal import butter, filtfilt, freqz
 from BRImage.glitchcore import remap, OverlayBase
 from BRImage.clib.algorithms import freqmod_row
 
+
 def _butter_lowpass(cutoff, fs, order=5):
     """ calculates the butterworth lowpass filter """
     nyq = 0.5 * fs
     normal_cutoff = cutoff / nyq
-    b, a = butter(order, normal_cutoff, btype='low', analog=False)
+    b, a = butter(order, normal_cutoff, btype="low", analog=False)
     return b, a
 
 
@@ -21,6 +22,7 @@ def _butter_lowpass_filter(data, cutoff, fs, order=5):
 
 class FreqModOverlay(OverlayBase):
     """ Frequncy Modulation Overlay """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.min_phase = 0
@@ -38,7 +40,7 @@ class FreqModOverlay(OverlayBase):
         else:
             image = np.zeros((self.height, self.width, 3), dtype=np.uint8)
             for i in range(img.shape[-1]):
-                print(f'Processing channel {i}')
+                print(f"Processing channel {i}")
                 channel = img[:, :, i]
                 image[..., i] = self._apply_to(channel, lowpass)
             self._image = image
@@ -50,12 +52,12 @@ class FreqModOverlay(OverlayBase):
             row = freqmod_row(row, self.width, self.max_phase, self.omega)
             if lowpass > 0.000001:  # float comparsison check
                 row = self._lowpass(row, lowpass)
-            new_channel.append(
-                row
-            )
+            new_channel.append(row)
 
         new_channel = np.array(new_channel)
-        new_channel = remap(new_channel, np.min(new_channel), np.max(new_channel), 0, 255)
+        new_channel = remap(
+            new_channel, np.min(new_channel), np.max(new_channel), 0, 255
+        )
         return np.array(new_channel)
 
     def _lowpass(self, row, amount):
@@ -67,11 +69,14 @@ class FreqModOverlay(OverlayBase):
 
     def _set_hyper_parameters(self, omega=0.1, phase=0.1, quantization=0, **kwargs):
         """ sets the necessary phase and omega values """
-        omega = remap(omega, 0, 1,
+        omega = remap(
+            omega,
+            0,
+            1,
             2 * np.pi / (0.5 * self.width),
-            2 * np.pi / (0.005 * self.width)
+            2 * np.pi / (0.005 * self.width),
         )
-        phase = remap(phase, 0, 1, 0, 2*np.pi)
+        phase = remap(phase, 0, 1, 0, 2 * np.pi)
 
         self.omega = omega
         self.max_phase = phase

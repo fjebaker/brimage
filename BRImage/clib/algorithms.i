@@ -5,6 +5,7 @@
     #include "freqmod.hpp"
     #include "canvas/canvas.hpp"
     #include "randomwalk.hpp"
+    #include "canvas/pixels.hpp"
 %}
 
 %include "numpy.i"
@@ -20,12 +21,19 @@
 %include "freqmod.hpp"
 %include "randomwalk.hpp"
 
-class Canvas {
+%include "canvas/pixels.hpp"
+
+template <class C> class Canvas {
 public:
   Canvas() = default;
   virtual ~Canvas() = default;
-  void set_inplace_layer(PX_TYPE* inplace_arr, int dim1, int dim2) noexcept ;
+  void set_inplace_layer(PX_TYPE* inplace_arr, int dim1, int dim2) ;
 };
+
+%template(Canvas_grey) Canvas<Grey>;
+%template(Canvas_rgb) Canvas<RGB>;
+
+%include "randomwalk.hpp"
 
 %pythoncode %{
 def freqmod(arr, omega, max_phase):

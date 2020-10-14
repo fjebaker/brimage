@@ -3,6 +3,6 @@
 
 #include "canvas/canvas.hpp"
 
-void random_walk(const Canvas &reference, Canvas &canvas);
+void random_walk(const Canvas<Grey> &reference, Canvas<Grey> &canvas);
 
 #endif

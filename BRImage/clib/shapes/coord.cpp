@@ -1,6 +1,7 @@
 #include "coord.hpp"
 
-Coord::Coord() noexcept : x{0}, y{0} { /* default constructor */ }
+Coord::Coord() noexcept : x{0}, y{0} { /* default constructor */
+}
 Coord::Coord(double x, double y) noexcept : x{x}, y{y} {
   /* double constructor */
 }

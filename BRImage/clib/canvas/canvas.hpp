@@ -1,34 +1,40 @@
 #ifndef CANVAS_HPP
 #define CANVAS_HPP
 
-typedef unsigned char PX_TYPE;
+#include "pixels.hpp"
 
-class Canvas {
+template <class C> class Canvas {
 
 protected:
   int width = 0;
   int height = 0;
 
   PX_TYPE *layer;
-  constexpr PX_TYPE &index(int x, int y) noexcept {
-    return layer[y * width + x];
+
+  constexpr void update(int x, int y, const C &c) noexcept {
+    layer[y * width + x] = c.val;
   }
 
 public:
   Canvas() = default;
   virtual ~Canvas() = default;
 
-  void set_inplace_layer(PX_TYPE *inplace_arr, int dim1, int dim2) noexcept;
+  constexpr void set_inplace_layer(PX_TYPE *inplace_arr, int dim1,
+                                   int dim2) noexcept {
+    layer = inplace_arr;
+    height = dim1;
+    width = dim2;
+  }
 
-  constexpr void stroke(int x, int y, PX_TYPE val) noexcept {
+  constexpr void stroke(int x, int y, const C &c) noexcept {
     /* bound safe stroke function */
     if (in_bounds(x, y)) {
-      index(x, y) = val;
+      update(x, y, c);
     }
   }
 
-  [[nodiscard]] constexpr PX_TYPE get_px(int x, int y) const noexcept {
-    return layer[y * width + x];
+  [[nodiscard]] constexpr C get_px(int x, int y) const noexcept {
+    return C(layer[y * width + x]);
   }
 
   constexpr bool in_bounds(int x, int y) const noexcept {

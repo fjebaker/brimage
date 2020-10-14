@@ -1,5 +1,5 @@
 from BRImage.glitchcore import OverlayBase
-from BRImage.clib.algorithms import random_walk, Canvas
+from BRImage.clib.algorithms import Canvas_grey, random_walk
 
 import resource
 
@@ -26,9 +26,9 @@ class RandomWalkOverlay(OverlayBase):
         image = np.array(self._image.convert("L"))
 
         # lower arrays into clib
-        ref_canvas = Canvas()
+        ref_canvas = Canvas_grey()
         ref_canvas.set_inplace_layer(reference)
-        img_canvas = Canvas()
+        img_canvas = Canvas_grey()
         img_canvas.set_inplace_layer(image)
 
         print_memory_usage()

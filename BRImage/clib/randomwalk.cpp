@@ -8,23 +8,23 @@
 #include <cmath>
 #include <stdlib.h>
 
-inline constexpr double calc_diff(const SubCanvas &reference,
-                                  const SubCanvas &canvas, int width,
+template <class C>
+inline constexpr double calc_diff(const SubCanvas<C> &reference,
+                                  const SubCanvas<C> &canvas, int width,
                                   int height) {
   double running_sum = 0;
 
   for (int i = 0; i < width; i++) {
     for (int j = 0; j < height; j++) {
       if (reference.in_bounds(i, j)) {
-        running_sum +=
-            abs((int)reference.get_px(i, j) - (int)canvas.get_px(i, j));
+        running_sum += reference.get_px(i, j).diff(canvas.get_px(i, j));
       }
     }
   }
   return running_sum;
 }
 
-void random_walk(const Canvas &reference, Canvas &canvas) {
+void random_walk(const Canvas<Grey> &reference, Canvas<Grey> &canvas) {
   const int width = reference.get_width();
   const int height = reference.get_height();
 
@@ -39,8 +39,8 @@ void random_walk(const Canvas &reference, Canvas &canvas) {
   int currx = rand() % (width - SQ_WIDTH) + MID_SQ_WIDTH;
   int curry = rand() % (height - SQ_WIDTH) + MID_SQ_WIDTH;
 
-  SubCanvas impart;
-  SubCanvas rw_part;
+  SubCanvas<Grey> impart;
+  SubCanvas<Grey> rw_part;
 
   Line good_line(0, 0, 0, 0);
 
@@ -50,7 +50,7 @@ void random_walk(const Canvas &reference, Canvas &canvas) {
 
   int nx, ny, _nx, _ny;
   double currerr;
-  unsigned char shade = reference.get_px(currx, curry);
+  Grey shade(reference.get_px(currx, curry));
 
   for (int i = 0; i < _MAX_SEGMENT_NO; i++) {
 
@@ -61,7 +61,7 @@ void random_walk(const Canvas &reference, Canvas &canvas) {
     impart.subregion(reference, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
     rw_part.subregion(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
 
-    localerr = calc_diff(impart, rw_part, SQ_WIDTH, SQ_WIDTH);
+    localerr = calc_diff<Grey>(impart, rw_part, SQ_WIDTH, SQ_WIDTH);
 
     bool saved = false;
     _nx = currx;
@@ -77,7 +77,7 @@ void random_walk(const Canvas &reference, Canvas &canvas) {
                sintab[a] + MID_SQ_WIDTH);
         l.trace(rw_part, shade);
 
-        currerr = calc_diff(impart, rw_part, SQ_WIDTH, SQ_WIDTH);
+        currerr = calc_diff<Grey>(impart, rw_part, SQ_WIDTH, SQ_WIDTH);
 
         if (currerr < localerr) {
           saved = true;

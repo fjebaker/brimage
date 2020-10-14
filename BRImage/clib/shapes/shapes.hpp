@@ -17,7 +17,7 @@ public:
   Shape(Shape &&) = delete;
 
   // pure virtual function
-  virtual void trace(Canvas &) const noexcept = 0;
+  virtual void trace(Canvas<Grey> &) const noexcept = 0;
 };
 
 class Line : public Shape {
@@ -36,12 +36,18 @@ public:
 
   Line &operator=(Line &&) = delete;
 
-  void trace(Canvas &canvas) const noexcept override;
-  void trace(Canvas &canvas, unsigned char shade) const noexcept;
+  void trace(Canvas<Grey> &canvas) const noexcept;
+
+  template <class C>
+  void trace(Canvas<C> &canvas, const C &shade) const noexcept;
 };
 
-inline void Line::trace(Canvas &canvas) const noexcept { trace(canvas, 0); }
-inline void Line::trace(Canvas &canvas, unsigned char shade) const noexcept {
+inline void Line::trace(Canvas<Grey> &canvas) const noexcept {
+  trace<Grey>(canvas, 0);
+}
+
+template <class C>
+inline void Line::trace(Canvas<C> &canvas, const C &colour) const noexcept {
   // Bresenham's Line Algorithm
   int x0 = (int)p1.x;
   int x1 = (int)p2.x;
@@ -54,7 +60,7 @@ inline void Line::trace(Canvas &canvas, unsigned char shade) const noexcept {
   int err = dx + dy;
 
   while (x0 != x1 && y0 != y1) {
-    canvas.stroke(x0, y0, shade);
+    canvas.stroke(x0, y0, colour);
     int e2 = 2 * err;
     if (e2 >= dy) {
       err += dy;

@@ -1,6 +1,7 @@
 # BRImage
-Glitch art servlet. Python backend for manipulating images to create glitch-art effects inspired by CRT monitors.
+![Build](https://github.com/dustpancake/BRImage/workflows/Build/badge.svg)
 
+Glitch Art Library and command line tool for generating glitch-art effects inspired by CRT monitors.
 One-liner install (requires Python >=3.7)
 ```
 pip install BRImage && brimage -h

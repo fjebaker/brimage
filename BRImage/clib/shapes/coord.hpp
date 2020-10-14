@@ -4,22 +4,20 @@
 class Coord {
 
 public:
+  double x;
+  double y;
 
-  double x ;
-  double y ;
+  Coord() noexcept;
+  virtual ~Coord() = default;
 
-  Coord() noexcept ;
-  virtual ~Coord() = default ;
+  Coord(double x, double y) noexcept;
+  Coord(const Coord &c) noexcept;
 
-  Coord(double x, double y) noexcept ;
-  Coord(const Coord& c) noexcept ;
+  Coord operator-(const Coord &c) const noexcept;
+  Coord operator+(const Coord &c) const noexcept;
+  Coord &operator=(const Coord &c) noexcept;
 
-  Coord operator-(const Coord& c) const noexcept ;
-  Coord operator+(const Coord& c) const noexcept ;
-  Coord& operator=(const Coord& c) noexcept ;
-
-  Coord& operator=(Coord&&) = delete;
-
+  Coord &operator=(Coord &&) = delete;
 };
 
 #endif

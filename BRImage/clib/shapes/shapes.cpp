@@ -1,21 +1,15 @@
 #include "shapes.hpp"
 
-Shape::Shape() noexcept {
-}
+Shape::Shape() noexcept {}
 
-Line::~Line() noexcept {
-}
+Line::~Line() noexcept {}
 
 Line::Line(double x1, double y1, double x2, double y2) noexcept
-  : p1{x1, y1}, p2{x2, y2} {
+    : p1{x1, y1}, p2{x2, y2} {
   /* double constructor */
 }
-Line::Line(const Coord& p1, const Coord& p2) noexcept
-  : p1{p1}, p2{p2} {
-  /* Coord constructor */
-}
 
-Line& Line::operator=(const Line& line) noexcept {
+Line &Line::operator=(const Line &line) noexcept {
   p1 = line.p1;
   p2 = line.p2;
   return *this;

@@ -10,7 +10,9 @@ protected:
   int height = 0;
 
   PX_TYPE *layer;
-  PX_TYPE &index(int x, int y) noexcept;
+  constexpr PX_TYPE &index(int x, int y) noexcept {
+    return layer[y * width + x];
+  }
 
 public:
   Canvas() = default;
@@ -18,40 +20,27 @@ public:
 
   void set_inplace_layer(PX_TYPE *inplace_arr, int dim1, int dim2) noexcept;
 
-  void stroke(int x, int y, PX_TYPE val) noexcept;
+  constexpr void stroke(int x, int y, PX_TYPE val) noexcept {
+    /* bound safe stroke function */
+    if (in_bounds(x, y)) {
+      index(x, y) = val;
+    }
+  }
 
-  PX_TYPE get_px(int x, int y) const noexcept;
+  [[nodiscard]] constexpr PX_TYPE get_px(int x, int y) const noexcept {
+    return layer[y * width + x];
+  }
 
-  bool in_bounds(int x, int y) const noexcept;
+  constexpr bool in_bounds(int x, int y) const noexcept {
+    if (x < 0 || x >= width || y < 0 || y >= height) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-  int get_width() const noexcept;
-  int get_height() const noexcept;
+  [[nodiscard]] constexpr int get_width() const noexcept { return width; }
+  [[nodiscard]] constexpr int get_height() const noexcept { return height; }
 };
-
-inline PX_TYPE &Canvas::index(int x, int y) noexcept {
-  return layer[y * width + x];
-}
-
-inline void Canvas::stroke(int x, int y, PX_TYPE val) noexcept {
-  /* bound safe stroke function */
-  if (in_bounds(x, y)) {
-    index(x, y) = val;
-  }
-}
-
-inline PX_TYPE Canvas::get_px(int x, int y) const noexcept {
-  return layer[y * width + x];
-}
-
-inline bool Canvas::in_bounds(int x, int y) const noexcept {
-  if (x < 0 || x >= width || y < 0 || y >= height) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-inline int Canvas::get_width() const noexcept { return width; }
-inline int Canvas::get_height() const noexcept { return height; }
 
 #endif

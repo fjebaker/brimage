@@ -8,8 +8,9 @@
 #include <cmath>
 #include <stdlib.h>
 
-inline double calc_diff(const SubCanvas &reference, const SubCanvas &canvas,
-                        int width, int height) {
+inline constexpr double calc_diff(const SubCanvas &reference,
+                                  const SubCanvas &canvas, int width,
+                                  int height) {
   double running_sum = 0;
 
   for (int i = 0; i < width; i++) {
@@ -24,13 +25,13 @@ inline double calc_diff(const SubCanvas &reference, const SubCanvas &canvas,
 }
 
 void random_walk(const Canvas &reference, Canvas &canvas) {
-  int width = reference.get_width();
-  int height = reference.get_height();
+  const int width = reference.get_width();
+  const int height = reference.get_height();
 
   int sintab[_MAX_ANGLES_NO];
   int costab[_MAX_ANGLES_NO];
   for (int i = 0; i < _MAX_ANGLES_NO; i++) {
-    double angle = 2 * PI * i / (double)_MAX_ANGLES_NO;
+    const double angle = 2 * PI * i / (double)_MAX_ANGLES_NO;
     sintab[i] = _MAX_STROKE_LEN * sin(angle);
     costab[i] = _MAX_STROKE_LEN * cos(angle);
   }

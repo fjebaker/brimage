@@ -7,16 +7,10 @@ double remap(double x, double s1, double s2, double d1, double d2) {
   return (((x - s1) * (d2 - d1)) / (s2 - s1)) + d1;
 }
 
-void freqmod_row (
-  double* input_arr, int input_dim,
-  double* output_arr, int output_dim,
-  double omega, double max_phase ) {
+void freqmod_row(double *input_arr, int input_dim, double *output_arr,
+                 int output_dim, double omega, double max_phase) {
 
-  double integral = 0,
-       runningmod = 0,
-       min_phase = -max_phase,
-       x = 0,
-       val;
+  double integral = 0, runningmod = 0, min_phase = -max_phase, x = 0, val;
 
   for (int i = 0; i < input_dim; i++) {
     x = input_arr[i];

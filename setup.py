@@ -3,6 +3,8 @@ from setuptools.command.build_ext import build_ext
 from BRImage import VERSION
 import os
 
+import numpy as np
+
 algorithms = Extension(
     "BRImage.clib._algorithms",
     sources=[
@@ -16,6 +18,7 @@ algorithms = Extension(
     ],
     language="c++",
     extra_compile_args=["-std=c++17"],
+    include_dirs=[np.get_include()],
 )
 
 with open("README.md", "r") as f:

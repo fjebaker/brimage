@@ -9,10 +9,10 @@ protected:
   int width, height;
   PX_TYPE *layer;
 
-  template <class C> void update(int x, int y, const C &c) noexcept {
+  template <class C> constexpr void update(int x, int y, const C &c) noexcept {
     layer[y * width + x] = c.a;
   }
-  template <> void update(int x, int y, const RGB &c) noexcept {
+  template <> constexpr void update(int x, int y, const RGB &c) noexcept {
     int index = 3 * (x + width * y);
     layer[index] = c.r;
     layer[index + 1] = c.g;
@@ -30,10 +30,11 @@ public:
   [[nodiscard]] constexpr int get_width() const noexcept { return width; }
   [[nodiscard]] constexpr int get_height() const noexcept { return height; }
 
-  template <class C>[[nodiscard]] C get_px(int x, int y) const noexcept {
+  template <class C>
+  [[nodiscard]] constexpr C get_px(int x, int y) const noexcept {
     return C(layer[y * width + x]);
   }
-  template <> RGB get_px(int x, int y) const noexcept {
+  template <> constexpr RGB get_px(int x, int y) const noexcept {
     int index = 3 * (x + width * y);
     return RGB(layer[index], layer[index + 1], layer[index + 2]);
   }
@@ -45,8 +46,8 @@ public:
   ~MonochomeCanvas() = default;
   constexpr MonochomeCanvas(PX_TYPE *inplace_arr, int dim1, int dim2)
       : Canvas{} {
-    width = dim1;
-    height = dim2;
+    width = dim2;
+    height = dim1;
     layer = inplace_arr;
   }
 };
@@ -61,13 +62,11 @@ public:
       throw std::runtime_error(
           "RGB Canvas requires array with shape (y, x, 3).");
     }
-    width = dim1;
-    height = dim2;
+    width = dim2;
+    height = dim1;
     layer = inplace_img;
   }
 };
-
-// ---------------- template declerations ---------------- //
 
 // ---------------- constexpr definitions ---------------- //
 

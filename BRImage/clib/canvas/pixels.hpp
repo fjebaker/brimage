@@ -14,16 +14,17 @@ struct Colour {
 
   ~Colour() noexcept = default;
 
-  inline double diff(const Colour &c) noexcept {
-    return (double)abs(this->r - c.r) + abs(this->g - c.g) +
-           abs(this->b - c.b) + abs(this->a - c.a);
-  }
+  virtual inline double diff(const Colour &c) noexcept = 0;
 
   PX_TYPE r, g, b, a;
 };
 
 struct Grey : public Colour {
   using Colour::Colour;
+
+  inline double diff(const Colour &c) noexcept override {
+    return (double)abs(this->a - c.a);
+  }
 };
 struct RGB : public Colour {
   using Colour::Colour;
@@ -31,6 +32,11 @@ struct RGB : public Colour {
     r = rval;
     g = gval;
     b = bval;
+  }
+
+  inline double diff(const Colour &c) noexcept override {
+    return (double)abs(this->r - c.r) + abs(this->g - c.g) +
+           abs(this->b - c.b) + abs(this->a - c.a);
   }
 };
 

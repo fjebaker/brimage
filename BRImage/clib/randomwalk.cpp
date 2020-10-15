@@ -58,9 +58,9 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
     cory = curry - MID_SQ_WIDTH;
 
     // get subregions
-    impart.subregion<T>(reference, corx, corx + SQ_WIDTH, cory,
-                        cory + SQ_WIDTH);
-    rw_part.subregion<T>(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
+    subregion<T>(impart, reference, corx, corx + SQ_WIDTH, cory,
+                 cory + SQ_WIDTH);
+    subregion<T>(rw_part, canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
 
     localerr = calc_diff<T>(impart, rw_part);
 
@@ -89,8 +89,8 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
         }
 
         // reset rw_part region
-        rw_part.subregion<T>(canvas, corx, corx + SQ_WIDTH, cory,
-                             cory + SQ_WIDTH);
+        subregion<T>(rw_part, canvas, corx, corx + SQ_WIDTH, cory,
+                     cory + SQ_WIDTH);
       }
     }
 
@@ -117,9 +117,4 @@ template <>
 void random_walk_template(const RGBCanvas &reference,
                           RGBCanvas &canvas) noexcept {
   random_walk<RGB>(reference, canvas);
-}
-
-template <>
-void random_walk_template(const Canvas &reference, Canvas &canvas) noexcept {
-  random_walk<Colour>(reference, canvas);
 }

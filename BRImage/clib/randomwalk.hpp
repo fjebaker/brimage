@@ -7,9 +7,6 @@ template <class T>
 void random_walk_template(const T &reference, T &canvas) noexcept {}
 
 template <>
-void random_walk_template(const Canvas &reference, Canvas &canvas) noexcept;
-
-template <>
 void random_walk_template(const MonochomeCanvas &reference,
                           MonochomeCanvas &canvas) noexcept;
 

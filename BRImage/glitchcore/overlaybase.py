@@ -31,6 +31,9 @@ class OverlayBase(_Image):
             self._gimage._image = ImageOps.expand(
                 self._gimage._image, border=width, fill="white"
             )
-            self._image = ImageOps.expand(
-                self._image, border=width, fill="white"
-            )
+            self._image = ImageOps.expand(self._image, border=width, fill="white")
+
+    def apply(self):
+        if not isinstance(self._image, PIL.Image.Image):
+            self._image_to_pil_image()
+        self._gimage._image = self._image

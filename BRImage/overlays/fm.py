@@ -90,5 +90,5 @@ class FreqModOverlay(OverlayBase):
 
     def save(self, name, **kwargs):
         self._image_to_pil_image()
-        self.expand(50)
+        self.expand(100)
         super().save(name, **kwargs)

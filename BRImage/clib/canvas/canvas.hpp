@@ -3,7 +3,6 @@
 
 #include "pixels.hpp"
 #include <stdexcept>
-#include <iostream>
 
 class Canvas {
 protected:

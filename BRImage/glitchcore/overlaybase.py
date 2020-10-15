@@ -22,4 +22,6 @@ class OverlayBase(_Image):
         self._gimage._image = ImageOps.expand(
             self._gimage._image, border=width, fill=self._init_colours
         )
-        self._image = ImageOps.expand(self._image, border=width, fill=self._init_colours)
+        self._image = ImageOps.expand(
+            self._image, border=width, fill=self._init_colours
+        )

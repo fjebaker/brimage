@@ -5,8 +5,8 @@
 #include "configs.hpp"
 
 #include <cmath>
-#include <stdlib.h>
 #include <iostream>
+#include <stdlib.h>
 
 template <class T>
 inline constexpr double calc_diff(const SubCanvas &reference,
@@ -15,7 +15,8 @@ inline constexpr double calc_diff(const SubCanvas &reference,
   for (int i = 0; i < SQ_WIDTH; i++) {
     for (int j = 0; j < SQ_WIDTH; j++) {
       if (reference.in_bounds(i, j) && canvas.in_bounds(i, j)) {
-        running_sum += reference.get_px<RGB>(i, j).diff(canvas.get_px<RGB>(i, j));
+        running_sum +=
+            reference.get_px<RGB>(i, j).diff(canvas.get_px<RGB>(i, j));
       }
     }
   }
@@ -23,7 +24,7 @@ inline constexpr double calc_diff(const SubCanvas &reference,
 }
 
 template <class T>
-void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
+void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
   const int width = reference.get_width();
   const int height = reference.get_height();
 
@@ -57,7 +58,8 @@ void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
     cory = curry - MID_SQ_WIDTH;
 
     // get subregions
-    impart.subregion<T>(reference, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
+    impart.subregion<T>(reference, corx, corx + SQ_WIDTH, cory,
+                        cory + SQ_WIDTH);
     rw_part.subregion<T>(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
 
     localerr = calc_diff<T>(impart, rw_part);
@@ -87,7 +89,8 @@ void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
         }
 
         // reset rw_part region
-        rw_part.subregion<T>(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
+        rw_part.subregion<T>(canvas, corx, corx + SQ_WIDTH, cory,
+                             cory + SQ_WIDTH);
       }
     }
 
@@ -105,12 +108,14 @@ void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
 }
 
 template <>
-void random_walk_template(const MonochomeCanvas &reference, MonochomeCanvas &canvas) noexcept {
+void random_walk_template(const MonochomeCanvas &reference,
+                          MonochomeCanvas &canvas) noexcept {
   random_walk<Grey>(reference, canvas);
 }
 
 template <>
-void random_walk_template(const RGBCanvas &reference, RGBCanvas &canvas) noexcept {
+void random_walk_template(const RGBCanvas &reference,
+                          RGBCanvas &canvas) noexcept {
   random_walk<RGB>(reference, canvas);
 }
 

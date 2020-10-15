@@ -3,7 +3,7 @@ from BRImage.clib.algorithms import (
     MonochomeCanvas,
     RGBCanvas,
     random_walk_monochrome,
-    random_walk_rgb
+    random_walk_rgb,
 )
 
 import resource
@@ -56,8 +56,6 @@ class RandomWalkOverlay(OverlayBase):
                 print("Drawing lines {}".format(i), end="\r")
                 random_walk_rgb(ref_canvas, img_canvas)
             end = time.time()
-
-
 
         print("Drawing lines {}".format(lines))
         print("Elapsed time {}".format(end - start))

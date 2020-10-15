@@ -2,3 +2,4 @@ exclude BRImage/clib/*.so
 include BRImage/clib/*.hpp
 include BRImage/clib/*.cpp
 include README.md
+exclude *.jpg

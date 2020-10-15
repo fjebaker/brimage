@@ -13,7 +13,7 @@ protected:
     layer[y * width + x] = c.a;
   }
   template <> void update(int x, int y, const RGB &c) noexcept {
-    int index = 3 * (x + width * y);
+    int index = 3 * (x + height * y);
     layer[index] = c.r;
     layer[index + 1] = c.g;
     layer[index + 2] = c.b;
@@ -34,7 +34,7 @@ public:
     return C(layer[y * width + x]);
   }
   template <> RGB get_px(int x, int y) const noexcept {
-    int index = 3 * (x + width * y);
+    int index = 3 * (x + height * y);
     return RGB(layer[index], layer[index + 1], layer[index + 2]);
   }
 };

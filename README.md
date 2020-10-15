@@ -1,6 +1,9 @@
+![](https://github.com/Dustpancake/BRImage/blob/master/banner-image.jpg) 
+
 # BRImage
 ![Build](https://github.com/dustpancake/BRImage/workflows/Build/badge.svg)
-[![PyPI Version](https://badge.fury.io/pypi/BRImage.svg)](https://pypi.python.org/pypi/BRImage/)
+[![PyPI Version](https://img.shields.io/pypi/v/brimage.svg)](https://pypi.python.org/pypi/BRImage/)
+[![PyPI Downloads per Week](https://img.shields.io/pypi/dw/brimage.svg)](https://pypi.python.org/pypi/BRImage/)
 
 Glitch Art Library and command line tool for generating glitch-art effects inspired by CRT monitors.
 One-liner install (requires Python >=3.7)

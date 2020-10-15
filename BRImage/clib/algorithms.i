@@ -31,6 +31,22 @@
 %include "freqmod.hpp"
 %include "randomwalk.hpp"
 
+%inline %{
+#include <iostream>
+void test(PX_TYPE* inplace_img, int dim1, int dim2, int dim3) {
+  for(int y = 0; y < dim1; y++) {
+    for (int x = 0; x < dim2; x++) {
+      for (int z = 0; z < dim3; z++) {
+        int index = 3 * (x + y * dim2) + z;
+        std::cout << (int) inplace_img[index] << " ";
+      }
+    }
+  }
+  std::cout << std::endl;
+}
+
+%}
+
 class RGBCanvas {
 public:
   RGBCanvas() = default;

@@ -12,18 +12,17 @@ template <class T>
 inline constexpr double calc_diff(const SubCanvas &reference,
                                   const SubCanvas &canvas) {
   double running_sum = 0;
-
   for (int i = 0; i < SQ_WIDTH; i++) {
     for (int j = 0; j < SQ_WIDTH; j++) {
-      if (reference.in_bounds(i, j)) {
-        running_sum += reference.get_px<T>(i, j).diff(canvas.get_px<T>(i, j));
+      if (reference.in_bounds(i, j) && canvas.in_bounds(i, j)) {
+        running_sum += reference.get_px<RGB>(i, j).diff(canvas.get_px<RGB>(i, j));
       }
     }
   }
   return running_sum;
 }
 
-template <class Colour>
+template <class T>
 void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
   const int width = reference.get_width();
   const int height = reference.get_height();
@@ -50,7 +49,7 @@ void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
 
   int nx, ny, _nx, _ny;
   double currerr;
-  Colour shade(reference.get_px<Colour>(currx, curry));
+  T shade(reference.get_px<T>(currx, curry));
 
   for (int i = 0; i < _MAX_SEGMENT_NO; i++) {
 
@@ -58,13 +57,10 @@ void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
     cory = curry - MID_SQ_WIDTH;
 
     // get subregions
-    //std::cout << "IMPART 1 " << corx << " by " << corx + SQ_WIDTH << ", " << cory << " by " << cory + SQ_WIDTH << std::endl;
+    impart.subregion<T>(reference, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
+    rw_part.subregion<T>(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
 
-    impart.subregion(reference, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
-    //std::cout << "RW_PART 1" << std::endl;
-    rw_part.subregion(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
-
-    localerr = calc_diff<Colour>(impart, rw_part);
+    localerr = calc_diff<T>(impart, rw_part);
 
     bool saved = false;
     _nx = currx;
@@ -78,9 +74,9 @@ void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
         // draw line
         Line l(MID_SQ_WIDTH, MID_SQ_WIDTH, costab[a] + MID_SQ_WIDTH,
                sintab[a] + MID_SQ_WIDTH);
-        l.trace(rw_part, shade);
+        l.trace<T>(rw_part, shade);
 
-        currerr = calc_diff<Colour>(impart, rw_part);
+        currerr = calc_diff<T>(impart, rw_part);
 
         if (currerr < localerr) {
           saved = true;
@@ -91,8 +87,7 @@ void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
         }
 
         // reset rw_part region
-        //std::cout << "RW_PART RESET" << std::endl;
-        rw_part.subregion(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
+        rw_part.subregion<T>(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
       }
     }
 
@@ -102,7 +97,7 @@ void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
       good_line.p2.x += currx - MID_SQ_WIDTH;
       good_line.p1.y += curry - MID_SQ_WIDTH;
       good_line.p2.y += curry - MID_SQ_WIDTH;
-      good_line.trace(canvas, shade);
+      good_line.trace<T>(canvas, shade);
       currx = _nx;
       curry = _ny;
     }

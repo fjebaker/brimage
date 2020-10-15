@@ -38,7 +38,8 @@ public:
 
   Line &operator=(Line &&) = delete;
 
-  inline void trace(Canvas &canvas, const Colour &shade) const noexcept;
+  template<class C>
+  inline void trace(Canvas &canvas, const C &shade) const noexcept;
 };
 
 /*
@@ -47,7 +48,8 @@ inline void Line::trace(Canvas<Grey> &canvas) const noexcept {
 }
 */
 
-inline void Line::trace(Canvas &canvas, const Colour &colour) const noexcept {
+template<class C>
+inline void Line::trace(Canvas &canvas, const C &colour) const noexcept {
   // Bresenham's Line Algorithm
   int x0 = (int)p1.x;
   int x1 = (int)p2.x;
@@ -60,7 +62,7 @@ inline void Line::trace(Canvas &canvas, const Colour &colour) const noexcept {
   int err = dx + dy;
 
   while (x0 != x1 && y0 != y1) {
-    canvas.stroke(x0, y0, colour);
+    canvas.stroke<C>(x0, y0, colour);
     int e2 = 2 * err;
     if (e2 >= dy) {
       err += dy;

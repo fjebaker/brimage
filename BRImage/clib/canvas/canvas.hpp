@@ -3,6 +3,7 @@
 
 #include "pixels.hpp"
 #include <stdexcept>
+#include <iostream>
 
 class Canvas {
 protected:
@@ -13,13 +14,19 @@ protected:
   void update(int x, int y, const C &c) noexcept {
     layer[y * width + x] = c.a;
   }
-  template<> void update(int x, int y, const RGB &c) noexcept ;
+  template<> void update(int x, int y, const RGB &c) noexcept {
+    int index = 3 * ( x + width * y) ;
+    layer[index] = c.r;
+    layer[index + 1] = c.g;
+    layer[index + 2] = c.b;
+  }
 
 public:
   constexpr Canvas() : width{0}, height{0}, layer{} {}
   virtual ~Canvas() = default;
 
-  constexpr void stroke(int x, int y, const Colour& c) noexcept ;
+  template <class C>
+  constexpr void stroke(int x, int y, const C& c) noexcept ;
 
   [[nodiscard]] constexpr bool in_bounds(int x, int y) const noexcept ;
 
@@ -31,7 +38,14 @@ public:
   [[nodiscard]] C get_px(int x, int y) const noexcept {
     return C(layer[y * width + x]);
   }
-  template<> RGB get_px(int x, int y) const noexcept ;
+  template<> RGB get_px(int x, int y) const noexcept {
+    int index = 3 * ( x + width * y) ;
+    return RGB(
+      layer[index],
+      layer[index + 1],
+      layer[index + 2]
+    );
+  }
 
 };
 
@@ -64,10 +78,11 @@ public:
 
 // ---------------- constexpr definitions ---------------- //
 
-constexpr void Canvas::stroke(int x, int y, const Colour& c) noexcept {
+template<class C>
+constexpr void Canvas::stroke(int x, int y, const C& c) noexcept {
   /* bound safe stroke function */
   if (in_bounds(x, y)) {
-    update<Colour>(x, y, c);
+    update<C>(x, y, c);
   }
 }
 

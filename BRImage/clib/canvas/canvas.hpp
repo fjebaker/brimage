@@ -2,6 +2,7 @@
 #define CANVAS_HPP
 
 #include "pixels.hpp"
+#include <stdexcept>
 
 class Canvas {
 protected:
@@ -9,13 +10,13 @@ protected:
   PX_TYPE* layer;
 
   template<class C>
-  constexpr void update(int x, int y, const C &c) noexcept {
+  void update(int x, int y, const C &c) noexcept {
     layer[y * width + x] = c.a;
   }
+  template<> void update(int x, int y, const RGB &c) noexcept ;
 
 public:
   constexpr Canvas() : width{0}, height{0}, layer{} {}
-  constexpr Canvas(PX_TYPE *inplace_arr, int dim1, int dim2) : width{dim1}, height{dim2}, layer{inplace_arr} {}
   virtual ~Canvas() = default;
 
   constexpr void stroke(int x, int y, const Colour& c) noexcept ;
@@ -27,10 +28,36 @@ public:
 
 
   template<class C>
-  [[nodiscard]] constexpr C get_px(int x, int y) const noexcept {
+  [[nodiscard]] C get_px(int x, int y) const noexcept {
     return C(layer[y * width + x]);
   }
+  template<> RGB get_px(int x, int y) const noexcept ;
 
+};
+
+class MonochomeCanvas : public Canvas {
+public:
+  MonochomeCanvas() = default ;
+  ~MonochomeCanvas() = default ;
+  constexpr MonochomeCanvas(PX_TYPE *inplace_arr, int dim1, int dim2) : Canvas {} {
+    width = dim1;
+    height = dim2;
+    layer = inplace_arr;
+  }
+};
+
+class RGBCanvas : public Canvas {
+public:
+  RGBCanvas() = default ;
+  ~RGBCanvas() = default ;
+  constexpr RGBCanvas(PX_TYPE *inplace_img, int dim1, int dim2, int dim3) : Canvas {} {
+    if (dim3 != 3) {
+      throw std::runtime_error("RGB Canvas requires array with shape (y, x, 3).");
+    }
+    width = dim1;
+    height = dim2;
+    layer = inplace_img;
+  }
 };
 
 // ---------------- template declerations ---------------- //

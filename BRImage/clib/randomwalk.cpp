@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <iostream>
 
+template <class T>
 inline constexpr double calc_diff(const SubCanvas &reference,
                                   const SubCanvas &canvas) {
   double running_sum = 0;
@@ -15,14 +16,15 @@ inline constexpr double calc_diff(const SubCanvas &reference,
   for (int i = 0; i < SQ_WIDTH; i++) {
     for (int j = 0; j < SQ_WIDTH; j++) {
       if (reference.in_bounds(i, j)) {
-        running_sum += reference.get_px<Colour>(i, j).diff(canvas.get_px<Colour>(i, j));
+        running_sum += reference.get_px<T>(i, j).diff(canvas.get_px<T>(i, j));
       }
     }
   }
   return running_sum;
 }
 
-void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
+template <class Colour>
+void random_walk(const Canvas& reference, Canvas& canvas) noexcept {
   const int width = reference.get_width();
   const int height = reference.get_height();
 
@@ -62,7 +64,7 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
     //std::cout << "RW_PART 1" << std::endl;
     rw_part.subregion(canvas, corx, corx + SQ_WIDTH, cory, cory + SQ_WIDTH);
 
-    localerr = calc_diff(impart, rw_part);
+    localerr = calc_diff<Colour>(impart, rw_part);
 
     bool saved = false;
     _nx = currx;
@@ -78,7 +80,7 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
                sintab[a] + MID_SQ_WIDTH);
         l.trace(rw_part, shade);
 
-        currerr = calc_diff(impart, rw_part);
+        currerr = calc_diff<Colour>(impart, rw_part);
 
         if (currerr < localerr) {
           saved = true;
@@ -105,4 +107,19 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
       curry = _ny;
     }
   }
+}
+
+template <>
+void random_walk_template(const MonochomeCanvas &reference, MonochomeCanvas &canvas) noexcept {
+  random_walk<Grey>(reference, canvas);
+}
+
+template <>
+void random_walk_template(const RGBCanvas &reference, RGBCanvas &canvas) noexcept {
+  random_walk<RGB>(reference, canvas);
+}
+
+template <>
+void random_walk_template(const Canvas &reference, Canvas &canvas) noexcept {
+  random_walk<Colour>(reference, canvas);
 }

@@ -1,5 +1,10 @@
 from BRImage.glitchcore import OverlayBase
-from BRImage.clib.algorithms import Canvas, random_walk
+from BRImage.clib.algorithms import (
+    MonochomeCanvas,
+    RGBCanvas,
+    random_walk_monochrome,
+    random_walk_rgb
+)
 
 import resource
 
@@ -27,18 +32,30 @@ class RandomWalkOverlay(OverlayBase):
             reference = np.array(self._gimage.get_image().convert("L"))
             image = np.array(self._image.convert("L"))
             # lower arrays into clib
-            ref_canvas = Canvas(reference)
-            img_canvas = Canvas(image)
+            ref_canvas = MonochomeCanvas(reference)
+            img_canvas = MonochomeCanvas(image)
             print_memory_usage()
             import time
 
             start = time.time()
             for i in range(lines):
                 print("Drawing lines {}".format(i), end="\r")
-                random_walk(ref_canvas, img_canvas)
+                random_walk_monochrome(ref_canvas, img_canvas)
             end = time.time()
         else:
-            raise NotImplementedError
+            reference = np.array(self._gimage.get_image().convert("RGB"))
+            image = np.array(self._image.convert("RGB"))
+            # lower arrays into clib
+            ref_canvas = RGBCanvas(reference)
+            img_canvas = RGBCanvas(image)
+            print_memory_usage()
+            import time
+
+            start = time.time()
+            for i in range(lines):
+                print("Drawing lines {}".format(i), end="\r")
+                random_walk_rgb(ref_canvas, img_canvas)
+            end = time.time()
 
 
 

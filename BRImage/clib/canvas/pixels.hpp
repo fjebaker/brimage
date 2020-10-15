@@ -31,8 +31,15 @@ struct Colour {
 };
 
 struct Grey : public Colour {
+  using Colour::Colour;
 };
 struct RGB : public Colour {
+  using Colour::Colour;
+  constexpr RGB(PX_TYPE rval, PX_TYPE gval, PX_TYPE bval) : Colour{} {
+    r = rval;
+    g = gval;
+    b = bval;
+  }
 };
 
 #endif

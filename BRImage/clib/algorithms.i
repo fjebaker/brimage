@@ -16,24 +16,28 @@
 
 %apply (double* IN_ARRAY1, int DIM1) {(double* input_arr, int input_dim)}
 %apply (double* ARGOUT_ARRAY1, int DIM1) {(double* output_arr, int output_dim)}
-%apply (unsigned char* INPLACE_ARRAY2, int DIM1, int DIM2) {(PX_TYPE* inplace_arr, int dim1, int dim2)};
+%apply (unsigned char* INPLACE_ARRAY2, int DIM1, int DIM2) {(PX_TYPE* inplace_arr2, int dim1, int dim2)};
+%apply (unsigned char* INPLACE_ARRAY3, int DIM1, int DIM2, int DIM3) {(PX_TYPE* inplace_arr3, int dim1, int dim2, int dim3)};
+
+%exception GreyCanvas {
+  try {
+    $action
+  } catch (std::runtime_error &e) {
+    PyErr_SetString(PyExc_RuntimeError, const_cast<char*>(e.what()));
+    SWIG_fail;
+  }
+}
 
 %include "freqmod.hpp"
 %include "randomwalk.hpp"
 
-%include "canvas/pixels.hpp"
 
-template <class C> class Canvas {
+class Canvas {
 public:
   Canvas() = default;
   virtual ~Canvas() = default;
-  void set_inplace_layer(PX_TYPE* inplace_arr, int dim1, int dim2) ;
+  Canvas(PX_TYPE* inplace_arr2, int dim1, int dim2) ;
 };
-
-%template(Canvas_grey) Canvas<Grey>;
-%template(Canvas_rgb) Canvas<RGB>;
-
-%include "randomwalk.hpp"
 
 %pythoncode %{
 def freqmod(arr, omega, max_phase):

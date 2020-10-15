@@ -16,8 +16,10 @@ public:
   // delete move constructor
   Shape(Shape &&) = delete;
 
+/*
   // pure virtual function
   virtual void trace(Canvas<Grey> &) const noexcept = 0;
+*/
 };
 
 class Line : public Shape {
@@ -36,18 +38,16 @@ public:
 
   Line &operator=(Line &&) = delete;
 
-  void trace(Canvas<Grey> &canvas) const noexcept;
-
-  template <class C>
-  void trace(Canvas<C> &canvas, const C &shade) const noexcept;
+  inline void trace(Canvas &canvas, const Colour &shade) const noexcept;
 };
 
+/*
 inline void Line::trace(Canvas<Grey> &canvas) const noexcept {
   trace<Grey>(canvas, 0);
 }
+*/
 
-template <class C>
-inline void Line::trace(Canvas<C> &canvas, const C &colour) const noexcept {
+inline void Line::trace(Canvas &canvas, const Colour &colour) const noexcept {
   // Bresenham's Line Algorithm
   int x0 = (int)p1.x;
   int x1 = (int)p2.x;

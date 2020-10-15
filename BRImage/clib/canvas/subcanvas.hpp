@@ -4,23 +4,28 @@
 #include "../configs.hpp"
 #include "canvas.hpp"
 
-template <class C> class SubCanvas : public Canvas<C> {
+#include <iostream>
+
+class SubCanvas : public Canvas {
 private:
   PX_TYPE region[SQ_WIDTH * SQ_WIDTH];
 
 public:
   SubCanvas() noexcept {
-    this->width = SQ_WIDTH;
-    this->height = SQ_WIDTH;
-    this->layer = region;
+    width = SQ_WIDTH;
+    height = SQ_WIDTH;
+    layer = region;
   }
+  SubCanvas(const SubCanvas& ) = delete;
+  SubCanvas(SubCanvas&& ) = delete;
+
   virtual ~SubCanvas() noexcept override = default;
 
-  constexpr void subregion(const Canvas<C> &supercanv, int x0, int x1, int y0,
+  constexpr void subregion(const Canvas& supercanv, int x0, int x1, int y0,
                            int y1) noexcept {
     for (int y = y0; y < y1; y++) {
       for (int x = x0; x < x1; x++) {
-        this->update(x - x0, y - y0, supercanv.get_px(x, y));
+        this->update<Colour>(x - x0, y - y0, supercanv.get_px<Colour>(x, y));
       }
     }
   }

@@ -1,5 +1,5 @@
 from BRImage.glitchcore import OverlayBase
-from BRImage.clib.algorithms import Canvas_grey, random_walk
+from BRImage.clib.algorithms import Canvas, random_walk
 
 import resource
 
@@ -18,27 +18,29 @@ import numpy as np
 class RandomWalkOverlay(OverlayBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-    def map_random_walk(self, lines=500):
-        # convert to grey scale; colour is TODO
+        # fix: add border to prevent seg fault
         self.expand(100)
-        reference = np.array(self._gimage.get_image().convert("L"))
-        image = np.array(self._image.convert("L"))
 
-        # lower arrays into clib
-        ref_canvas = Canvas_grey()
-        ref_canvas.set_inplace_layer(reference)
-        img_canvas = Canvas_grey()
-        img_canvas.set_inplace_layer(image)
+    def map_random_walk(self, lines=500, greyscale=False):
+        # convert to grey scale; colour is TODO
+        if greyscale:
+            reference = np.array(self._gimage.get_image().convert("L"))
+            image = np.array(self._image.convert("L"))
+            # lower arrays into clib
+            ref_canvas = Canvas(reference)
+            img_canvas = Canvas(image)
+            print_memory_usage()
+            import time
 
-        print_memory_usage()
-        import time
+            start = time.time()
+            for i in range(lines):
+                print("Drawing lines {}".format(i), end="\r")
+                random_walk(ref_canvas, img_canvas)
+            end = time.time()
+        else:
+            raise NotImplementedError
 
-        start = time.time()
-        for i in range(lines):
-            print("Drawing lines {}".format(i), end="\r")
-            random_walk(ref_canvas, img_canvas)
-        end = time.time()
+
 
         print("Drawing lines {}".format(lines))
         print("Elapsed time {}".format(end - start))

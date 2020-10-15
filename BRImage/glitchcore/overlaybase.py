@@ -19,9 +19,18 @@ class OverlayBase(_Image):
         self._image = PIL.Image.fromarray(self._image)
 
     def expand(self, width):
-        self._gimage._image = ImageOps.expand(
-            self._gimage._image, border=width, fill=self._init_colours
-        )
-        self._image = ImageOps.expand(
-            self._image, border=width, fill=self._init_colours
-        )
+        try:
+            self._gimage._image = ImageOps.expand(
+                self._gimage._image, border=width, fill=self._init_colours
+            )
+            self._image = ImageOps.expand(
+                self._image, border=width, fill=self._init_colours
+            )
+        except TypeError:
+            # botch fix for greyscale case
+            self._gimage._image = ImageOps.expand(
+                self._gimage._image, border=width, fill="white"
+            )
+            self._image = ImageOps.expand(
+                self._image, border=width, fill="white"
+            )

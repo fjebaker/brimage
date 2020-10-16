@@ -1,8 +1,12 @@
 from BRImage.commandline.base_parser import subcommand
+from BRImage.logging import cli_logger
 
 
 def _run(ginput, omega=0.3, phase=0.5, lowpass=0, pquantize=0, **kwargs):
     """ run frequency modulation cli script """
+    cli_logger.info(
+        f"Frequency modulation with omega {omega:.3f}, phase {phase:.3f}, lowpass {lowpass:.3f}, pquantize {pquantize}."
+    )
     fm = ginput.freqmod_overlay(rinit=0, ginit=0, binit=0)
     fm.map_freq_modulation(omega=omega, phase=phase, lowpass=lowpass)
     if pquantize > 0:

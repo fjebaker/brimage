@@ -1,3 +1,5 @@
+import numpy as np
+
 from BRImage.glitchcore import OverlayBase
 from BRImage.clib.algorithms import (
     MonochomeCanvas,
@@ -7,17 +9,15 @@ from BRImage.clib.algorithms import (
 )
 
 import resource
+from BRImage.logging import brimage_logger, cli_logger
 
 
 def print_memory_usage():
-    print(
+    brimage_logger.debug(
         "Memory usage at {} M".format(
             resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1000 ** 2
         )
     )
-
-
-import numpy as np
 
 
 class RandomWalkOverlay(OverlayBase):
@@ -34,32 +34,23 @@ class RandomWalkOverlay(OverlayBase):
             # lower arrays into clib
             ref_canvas = MonochomeCanvas(reference)
             img_canvas = MonochomeCanvas(image)
-            print_memory_usage()
-            import time
-
-            start = time.time()
-            for i in range(lines):
-                print("Drawing lines {}".format(i), end="\r")
-                random_walk_monochrome(ref_canvas, img_canvas)
-            end = time.time()
+            _random_walk_func = random_walk_monochrome
         else:
             reference = np.array(self._gimage.get_image().convert("RGB"))
             image = np.array(self._image.convert("RGB"))
             # lower arrays into clib
             ref_canvas = RGBCanvas(reference)
             img_canvas = RGBCanvas(image)
-            print_memory_usage()
-            import time
+            _random_walk_func = random_walk_rgb
 
-            start = time.time()
-            for i in range(lines):
-                print("Drawing lines {}".format(i), end="\r")
-                random_walk_rgb(ref_canvas, img_canvas)
-            end = time.time()
+        print_memory_usage()
+        for i in range(lines):
+            #  have to use print() for carriage return
+            print("Drawing lines {}...".format(i), end="\r")
+            # cli_logger.info("Drawing lines {}\r".format(i))
+            _random_walk_func(ref_canvas, img_canvas)
 
-        print("Drawing lines {}".format(lines))
-        print("Elapsed time {}".format(end - start))
-        print("Done.")
+        cli_logger.info("Drawing lines {}..!".format(lines))
         print_memory_usage()
 
         self._image = image

@@ -1,8 +1,14 @@
 from BRImage.commandline.base_parser import subcommand
+from BRImage.logging import cli_logger
 
 
 def _run(ginput, lines=500, greyscale=False, **kwargs):
     """ run random walk cli script """
+    cli_logger.info(
+        "Random walk: drawing {} lines, {} mode.".format(
+            lines, "greyscale" if greyscale else "colour"
+        )
+    )
     rw = ginput.random_walk_overlay(rinit=35, ginit=32, binit=28)
     rw.map_random_walk(lines=lines, greyscale=greyscale)
     rw.apply()

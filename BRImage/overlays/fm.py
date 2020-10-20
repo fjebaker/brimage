@@ -28,22 +28,42 @@ class FreqModOverlay(OverlayBase):
         self.min_phase = 0
         self.max_phase = 0
 
-    def map_freq_modulation(self, grayscale=True, lowpass=0, **kwargs):
+    def map_freq_modulation(self, greyscale=True, numdevs=0, lowpass=0, **kwargs):
         """ calculates frequency modulation and imposes it on the return image """
         img = np.array(self._gimage.get_image())
-        self.grayscale = grayscale
+        self.greyscale = greyscale
         self._set_hyper_parameters(**kwargs)
 
-        if grayscale:
+        if greyscale:
             img = np.mean(img, axis=2)
             self._image = self._apply_to(img, lowpass)
+            if numdevs > 0:
+                self._image = self._take_distribution(self._image, numdevs)
         else:
             image = np.zeros((self.height, self.width, 3), dtype=np.uint8)
             for i in range(img.shape[-1]):
                 print(f"Processing channel {i}")
                 channel = img[:, :, i]
-                image[..., i] = self._apply_to(channel, lowpass)
+                channel = self._apply_to(channel, lowpass)
+
+                if numdevs > 0: 
+                    channel = self._take_distribution(channel, numdevs)
+
+                image[..., i] = channel
             self._image = image
+
+
+    def _take_distribution(self, layer, numdevs):
+        """ map mean + (stds_from_mean) * std to 255, otherwise 0 in image """
+
+        _mean = np.mean(layer)
+        _std = np.std(layer)
+
+        layer = np.where(
+            layer > _mean + numdevs * _std, 255, 0,
+        )
+        return np.array(layer, dtype=np.uint8)
+
 
     def _apply_to(self, channel, lowpass):
         """ applies the FM algorithm to a specific channel """

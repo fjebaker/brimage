@@ -2,13 +2,13 @@ from BRImage.commandline.base_parser import subcommand
 from BRImage.logging import cli_logger
 
 
-def _run(ginput, omega=0.3, phase=0.5, lowpass=0, pquantize=0, **kwargs):
+def _run(ginput, omega=0.3, phase=0.5, lowpass=0, pquantize=0, numdevs=0, **kwargs):
     """ run frequency modulation cli script """
     cli_logger.info(
-        f"Frequency modulation with omega {omega:.3f}, phase {phase:.3f}, lowpass {lowpass:.3f}, pquantize {pquantize}."
+        f"Frequency modulation with omega {omega:.3f}, phase {phase:.3f}, lowpass {lowpass:.3f}, pquantize {pquantize}, numdevs {numdevs}."
     )
     fm = ginput.freqmod_overlay(rinit=0, ginit=0, binit=0)
-    fm.map_freq_modulation(omega=omega, phase=phase, lowpass=lowpass)
+    fm.map_freq_modulation(omega=omega, phase=phase, lowpass=lowpass, numdevs=numdevs)
     if pquantize > 0:
         fm.post_quantize(pquantize)
     fm.apply()
@@ -21,13 +21,13 @@ def _freqmod_cli(parser):
     parser.add_argument(
         "--omega",
         type=float,
-        default=0.3,
+        default=0.1,
         help="Frequency omega; controls line spacing. Range: 0.0 to 1.0, >1.0 also works, but ugly.",
     )
     parser.add_argument(
         "--phase",
         type=float,
-        default=0.5,
+        default=0.1,
         help="Controls the phase range that is used to map the pixel values into. Higher values distort the image more. Range: 0.0 to 1.0",
     )
     parser.add_argument(
@@ -41,6 +41,12 @@ def _freqmod_cli(parser):
         type=int,
         default=0,
         help="Post-quantize number; integer number of colours to quantize image to after frequency modulation. Range: >=0. Value of 0 disables post-quantize",
+    )
+    parser.add_argument(
+        "--numdevs",
+        type=float,
+        default=0,
+        help="Number of standard deviations from the mean to map to white, turn the rest of the image black. If 0, disables this mapping.",
     )
 
     return _run

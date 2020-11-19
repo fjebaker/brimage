@@ -49,7 +49,7 @@ Example:
 
 Input Image            |  Output Image
 :-------------------------:|:-------------------------:
-![](https://github.com/Dustpancake/BRImage/blob/master/example/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/example/freqmod.jpg)
+![](https://github.com/Dustpancake/BRImage/blob/master/examples/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/examples/freqmod.jpg)
 
 ### Random Walk <a name="toc-sub-tag-2"></a>
 Command line:
@@ -73,7 +73,7 @@ Example:
 
 Input Image            |  Output Image
 :-------------------------:|:-------------------------:
-![](https://github.com/Dustpancake/BRImage/blob/master/example/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/example/randomwalk.jpg)
+![](https://github.com/Dustpancake/BRImage/blob/master/examples/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/examples/randomwalk.jpg)
 
 ## Installation <a name="toc-sub-tag-3"></a>
 BRImage now comes with a very minimal command line interface, usable with

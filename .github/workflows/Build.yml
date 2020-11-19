@@ -31,9 +31,12 @@ jobs:
     - name: Run SWIG
       run: |
         swig -c++ -python -py3 BRImage/clib/algorithms.i
-    - name: Build
+    - name: Build and install with pip
       run: |
         CC=clang++ python -m pip install .
+    - name: Build inplace
+      run: |
+        CC=clang++ python setup.py build_ext --inplace
     - name: Check CLI
       run: |
         brimage -h

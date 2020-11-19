@@ -1,5 +1,5 @@
 from BRImage.commandline.base_parser import subcommand
-from BRImage.logging import cli_logger
+from BRImage.logger import cli_logger
 
 
 def _run(ginput, omega=0.3, phase=0.5, lowpass=0, pquantize=0, numdevs=0, **kwargs):

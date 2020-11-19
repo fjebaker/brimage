@@ -4,7 +4,7 @@ import time
 
 from BRImage import VERSION, HEADER
 from BRImage.glitchimage import GlitchImage
-from BRImage.logging import cli_logger, brimage_logger
+from BRImage.logger import cli_logger, brimage_logger
 
 cli = argparse.ArgumentParser(
     prog="BRImage",

@@ -9,7 +9,7 @@ from BRImage.clib.algorithms import (
 )
 
 import resource
-from BRImage.logging import brimage_logger, cli_logger
+from BRImage.logger import brimage_logger, cli_logger
 
 
 def print_memory_usage():

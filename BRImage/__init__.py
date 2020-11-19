@@ -10,6 +10,3 @@ HEADER = r"""
 """.format(
     VERSION
 )
-
-# needed to init loggers
-import BRImage.logging

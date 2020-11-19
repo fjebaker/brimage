@@ -128,10 +128,11 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# custom 
+# custom
 __samples
 algoltest.py
 *.so
 BRImage/clib/algorithms.py
 BRImage/clib/algorithms_wrap.cxx
 BRImage/clib/numpy.i
+.ccls-cache

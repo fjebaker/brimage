@@ -4,7 +4,7 @@
 // random walk and subregions
 #define _MAX_STROKE_LEN 13
 #define _MAX_SEGMENT_NO 300
-#define _MAX_ANGLES_NO 3
+#define _MAX_ANGLES_NO 5
 
 // mathematical constants
 #define PI 3.141592653589793238463

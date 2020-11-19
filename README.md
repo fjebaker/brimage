@@ -1,4 +1,4 @@
-![](https://github.com/Dustpancake/BRImage/blob/master/banner-image.jpg) 
+![](https://github.com/Dustpancake/BRImage/blob/master/banner-image.jpg)
 
 # BRImage
 ![Build](https://github.com/dustpancake/BRImage/workflows/Build/badge.svg)
@@ -13,19 +13,75 @@ pip install BRImage && brimage -h
 
 <!--BEGIN TOC-->
 ## Table of Contents
-1. [Installation and use](#toc-sub-tag-0)
-	1. [pypi](#toc-sub-tag-1)
-	2. [git](#toc-sub-tag-2)
-2. [Sample image:](#toc-sub-tag-3)
+1. [Usage](#toc-sub-tag-0)
+	1. [Frequency Modulation](#toc-sub-tag-1)
+	2. [Random Walk](#toc-sub-tag-2)
+2. [Installation](#toc-sub-tag-3)
+	1. [pypi](#toc-sub-tag-4)
+	2. [Building from source](#toc-sub-tag-5)
 <!--END TOC-->
 
-## Installation and use <a name="toc-sub-tag-0"></a>
+## Usage <a name="toc-sub-tag-0"></a>
+BRImage can be used as both a command line interface and python package. The command line tool provides basic access to each algorithm:
+
+### Frequency Modulation <a name="toc-sub-tag-1"></a>
+Command line:
+```
+$ brimage freqmod -h
+usage: BRImage freqmod [-h] [--omega OMEGA] [--phase PHASE] [--lowpass LOWPASS] [--pquantize PQUANTIZE] [-o OUTPUT_FILE] input_image
+
+Frequency modulation algorithm for images. Implicitly converts to greyscale.
+
+positional arguments:
+  input_image           Input image path; most common formats are accepted.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --omega OMEGA         Frequency omega; controls line spacing. Range: 0.0 to 1.0, >1.0 also works, but ugly. (default: 0.3)
+  --phase PHASE         Controls the phase range that is used to map the pixel values into. Higher values distort the image more. Range: 0.0 to 1.0 (default: 0.5)
+  --lowpass LOWPASS     Set the lowpass filter amount. Lower values blur out fine detail more. Set to 0 disables the filter. Preconfigured to 30Hz sample rate. Range: 0.0 to 1.0. (default: 0)
+  --pquantize PQUANTIZE
+                        Post-quantize number; integer number of colours to quantize image to after frequency modulation. Range: >=0. Value of 0 disables post-quantize (default: 0)
+  -o OUTPUT_FILE, --output_file OUTPUT_FILE
+                        Output image path. (default: output.jpg)
+```
+Example:
+
+Input Image            |  Output Image
+:-------------------------:|:-------------------------:
+![](https://github.com/Dustpancake/BRImage/blob/master/example/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/example/freqmod.jpg)
+
+### Random Walk <a name="toc-sub-tag-2"></a>
+Command line:
+```
+$ brimage randomwalk -h
+usage: BRImage randomwalk [-h] [--lines LINES] [--greyscale] [-o OUTPUT_FILE] input_image
+
+Random walk algorithm for images. Most values are still hardcoded in a header file, which requires recompilation. Later release will make this available through python.
+
+positional arguments:
+  input_image           Input image path; most common formats are accepted.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --lines LINES         Number of individual line paths to draw. (default: 500)
+  --greyscale           Process image as greyscale. (default: False)
+  -o OUTPUT_FILE, --output_file OUTPUT_FILE
+                        Output image path. (default: output.jpg)
+```
+Example:
+
+Input Image            |  Output Image
+:-------------------------:|:-------------------------:
+![](https://github.com/Dustpancake/BRImage/blob/master/example/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/example/randomwalk.jpg)
+
+## Installation <a name="toc-sub-tag-3"></a>
 BRImage now comes with a very minimal command line interface, usable with
 ```bash
 brimage -h
 ```
 
-### pypi <a name="toc-sub-tag-1"></a>
+### pypi <a name="toc-sub-tag-4"></a>
 I've made the project available with `pip` (you can view the project [here](https://pypi.org/project/BRImage/)):
 ```bash
 pip install BRImage
@@ -36,17 +92,12 @@ and run with
 brimage
 ```
 
-### Building from source <a name="toc-sub-tag-2"></a>
-Requires [SWIG](http://swig.org/).
+### Building from source <a name="toc-sub-tag-5"></a>
+- Requires [SWIG](http://swig.org/).
 
 First, clone the repository
 ```bash
 git clone https://github.com/Dustpancake/BRImage && cd BRImage
-```
-It is recommended to use a *virtual environment*
-```bash
-# *nix
-python3 -m venv venv && source venv/bin/activate
 ```
 
 Generate the SWIG files; for this we require `numpy.i`:
@@ -55,33 +106,28 @@ curl "https://raw.githubusercontent.com/numpy/numpy/master/tools/swig/numpy.i" >
 ```
 Then we generate the `.py` and `.cxx` files with
 ```bash
-cd BRImage/clib \
-    && swig -c++ -python -py3 algorithms.i \
-    && cd -
+swig -c++ -python -py3 BRImage/clib/algorithms.i
 ```
-We then build with
+The next stage can be done in a few different ways:
+
+- Isolated `build` directory
+
+Build the project with the `--target` pip flag, to prevent it from being installed into the environment:
+```bash
+pip install -e .
+```
+
+- Install dependencies and build inplace:
+
+Install the required modules with
+```bash
+pip install -r requirements.txt
+```
+Then to only build the external C++ modules, use
 ```bash
 python setup.py build_ext --inplace
 ```
-
-or install into the environment with 
-```bash
-pip install .
-```
-- Running the script
-
-To run when build from source:
+Run with
 ```bash
 python BRImage
 ```
-
-If installed, use
-```bash
-brimage
-```
-
-## Sample image: <a name="toc-sub-tag-3"></a>
-
-Input Image            |  Output Image
-:-------------------------:|:-------------------------:
-![](https://github.com/Dustpancake/BRImage/blob/master/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/sample-glitch.jpg)

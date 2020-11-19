@@ -34,3 +34,12 @@ jobs:
     - name: Build
       run: |
         CC=clang++ python -m pip install .
+    - name: Check CLI
+      run: |
+        brimage -h
+        python BRImage -h
+        python -m BRImage -h
+    - name: Check algorithms
+      run: |
+        brimage freqmod examples/sample-image.jpg
+        brimage randomwalk examples/sample-image.jpg

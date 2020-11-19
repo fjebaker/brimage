@@ -10,3 +10,5 @@ HEADER = r"""
 """.format(
     VERSION
 )
+
+import BRImage.logger

@@ -22,7 +22,11 @@ pip install BRImage && brimage -h
 <!--END TOC-->
 
 ## Usage <a name="toc-sub-tag-0"></a>
-BRImage can be used as both a command line interface and python package. The command line tool provides basic access to each algorithm:
+BRImage can be used as both a command line interface and python package. The command line tool provides basic access to each algorithm.
+
+```bash
+brimage -h
+```
 
 ### Frequency Modulation <a name="toc-sub-tag-1"></a>
 Command line:
@@ -76,10 +80,6 @@ Input Image            |  Output Image
 ![](https://github.com/Dustpancake/BRImage/blob/master/examples/sample-image.jpg)  |  ![](https://github.com/Dustpancake/BRImage/blob/master/examples/randomwalk.jpg)
 
 ## Installation <a name="toc-sub-tag-3"></a>
-BRImage now comes with a very minimal command line interface, usable with
-```bash
-brimage -h
-```
 
 ### pypi <a name="toc-sub-tag-4"></a>
 I've made the project available with `pip` (you can view the project [here](https://pypi.org/project/BRImage/)):

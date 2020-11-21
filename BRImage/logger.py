@@ -18,9 +18,11 @@ class CLIFormatter(logging.Formatter):
 
 
 def _configure_logging(level, show=False):
-    logger = logging.getLogger("brimage")
+    logger = logging.getLogger("BRImage")
     if show:
-        formatter = logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
+        formatter = logging.Formatter(
+            "%(asctime)s | %(levelname)s | %(name)s: %(message)s"
+        )
         handler = logging.StreamHandler()
         handler.setLevel(level)
         handler.setFormatter(formatter)
@@ -41,5 +43,5 @@ def _cli_logger():
     return console_logger
 
 
-brimage_logger = _configure_logging(logging.DEBUG, show=False)
+brimage_logger = _configure_logging(logging.DEBUG, show=True)
 cli_logger = _cli_logger()

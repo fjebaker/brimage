@@ -4,7 +4,11 @@ import time
 
 from BRImage import VERSION, HEADER
 from BRImage.glitchimage import GlitchImage
-from BRImage.logger import cli_logger, brimage_logger
+from BRImage.logger import cli_logger
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 cli = argparse.ArgumentParser(
     prog="BRImage",
@@ -66,7 +70,7 @@ def _image(parser, _runner):
 
 
 def subcommand(name, iotype="image", parent=sub_parser):
-    brimage_logger.debug(f"Installing subcommand {name}, iotype '{iotype}'")
+    logger.debug(f"Installing subcommand {name}, iotype '{iotype}'")
 
     def _wrap(func):
         parser = parent.add_parser(

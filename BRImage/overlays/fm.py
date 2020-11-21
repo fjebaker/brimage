@@ -1,8 +1,13 @@
 import numpy as np
 from scipy.signal import butter, filtfilt, freqz
 
-from BRImage.glitchcore import remap, OverlayBase
+from BRImage.glitchcore.helper import remap
+from BRImage.overlays.overlaybase import OverlayBase
 from BRImage.clib.algorithms import freqmod_row
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def _butter_lowpass(cutoff, fs, order=5):
@@ -46,12 +51,11 @@ class FreqModOverlay(OverlayBase):
                 channel = img[:, :, i]
                 channel = self._apply_to(channel, lowpass)
 
-                if numdevs > 0: 
+                if numdevs > 0:
                     channel = self._take_distribution(channel, numdevs)
 
                 image[..., i] = channel
             self._image = image
-
 
     def _take_distribution(self, layer, numdevs):
         """ map mean + (stds_from_mean) * std to 255, otherwise 0 in image """
@@ -60,10 +64,11 @@ class FreqModOverlay(OverlayBase):
         _std = np.std(layer)
 
         layer = np.where(
-            layer > _mean + numdevs * _std, 255, 0,
+            layer > _mean + numdevs * _std,
+            255,
+            0,
         )
         return np.array(layer, dtype=np.uint8)
-
 
     def _apply_to(self, channel, lowpass):
         """ applies the FM algorithm to a specific channel """

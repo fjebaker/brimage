@@ -1,6 +1,6 @@
 import numpy as np
 
-from BRImage.glitchcore import OverlayBase
+from BRImage.overlays.overlaybase import OverlayBase
 from BRImage.clib.algorithms import (
     MonochomeCanvas,
     RGBCanvas,
@@ -9,11 +9,15 @@ from BRImage.clib.algorithms import (
 )
 
 import resource
-from BRImage.logger import brimage_logger, cli_logger
+from BRImage.logger import cli_logger
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def print_memory_usage():
-    brimage_logger.debug(
+    logger.debug(
         "Memory usage at {} M".format(
             resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1000 ** 2
         )

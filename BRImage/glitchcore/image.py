@@ -8,7 +8,7 @@ except ImportError:
 
 class _Image:
     def __init__(self):
-        pass
+        self._image = None
 
     def show(self, ax, **kwargs):
         ax.imshow(self._image, **kwargs)

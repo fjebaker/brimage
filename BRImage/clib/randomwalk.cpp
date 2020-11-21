@@ -36,6 +36,7 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
     costab[i] = _MAX_STROKE_LEN * cos(angle);
   }
 
+  // current x and y values, corrected for the size of the region
   int currx = rand() % (width - SQ_WIDTH) + MID_SQ_WIDTH;
   int curry = rand() % (height - SQ_WIDTH) + MID_SQ_WIDTH;
 
@@ -54,8 +55,17 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
 
   for (int i = 0; i < _MAX_SEGMENT_NO; i++) {
 
+    // x and y values ranging from 0 to the max respective minus size of the
+    // square
     corx = currx - MID_SQ_WIDTH;
     cory = curry - MID_SQ_WIDTH;
+
+    // segfault prevention clause; if outside of image, break
+    // todo: have a better way of calculating regions near the boundary
+    if (corx < 0 || cory < 0 || currx + MID_SQ_WIDTH > width ||
+        curry + MID_SQ_WIDTH > height) {
+      break;
+    }
 
     // get subregions
     subregion<T>(impart, reference, corx, corx + SQ_WIDTH, cory,

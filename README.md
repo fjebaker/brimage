@@ -1,15 +1,24 @@
-![](https://github.com/Dustpancake/BRImage/blob/master/banner-image.jpg)
+<p align="center">
+  <img alt="BRImage" src="https://github.com/Dustpancake/BRImage/blob/master/banner-image.jpg">
+</p>
+
 
 # BRImage
-![Build](https://github.com/dustpancake/BRImage/workflows/Build/badge.svg)
-[![PyPI Version](https://img.shields.io/pypi/v/brimage.svg)](https://pypi.python.org/pypi/BRImage/)
-[![PyPI Downloads per Week](https://img.shields.io/pypi/dw/brimage.svg)](https://pypi.python.org/pypi/BRImage/)
+
+<p align="center">
+<a href="https://github.com/dustpancake/BRImage/workflows/Build/"><img alt="Build Status" src="https://github.com/dustpancake/BRImage/workflows/Build/badge.svg"></a>
+<a href="https://pypi.python.org/pypi/BRImage/"><img alt="PyPi Version" src="https://img.shields.io/pypi/v/brimage.svg"></a>
+<a href="https://pypi.python.org/pypi/BRImage/"><img alt="Downloads per Week" src="https://img.shields.io/pypi/dw/brimage.svg"></a>
+</p>
+
 
 Glitch Art Library and command line tool for generating glitch-art effects inspired by CRT monitors.
-One-liner install (requires Python >=3.7)
+
+One-liner install:
 ```
 pip install BRImage && brimage -h
 ```
+*Note:* requires Python3.7 or higher.
 
 <!--BEGIN TOC-->
 ## Table of Contents
@@ -19,6 +28,7 @@ pip install BRImage && brimage -h
 2. [Installation](#toc-sub-tag-3)
 	1. [pypi](#toc-sub-tag-4)
 	2. [Building from source](#toc-sub-tag-5)
+3. [Changelog](#toc-sub-tag-6)
 <!--END TOC-->
 
 ## Usage <a name="toc-sub-tag-0"></a>
@@ -131,3 +141,18 @@ Run with
 ```bash
 python BRImage
 ```
+
+## Changelog <a name="toc-sub-tag-6"></a>
+
+- 0.2.0: Major refactor, favouring Feed derived classes as abstraction for image input.
+- 0.1.11: Staged some video I/O wrappers.
+- 0.1.10: Introduced `numdevs` contrasting parameter in frequency modulation.
+- 0.1.9: Updated CLI for all algorithms.
+- 0.1.8: RGB support added for random walk.
+- 0.1.7: Added random walk algorithm (greyscale only).
+- 0.1.6: Changed home-baked to SWIG wrapper.
+- 0.1.5: Home-baked C++ backend for the frequency modulation algorithm.
+
+---
+
+Uses [ffmeg](https://github.com/kkroening/ffmpeg-python) for Video I/O, [pillow](https://github.com/python-pillow/Pillow) for Image I/O, [numpy](https://github.com/numpy/numpy) as the workhorse and [black](https://github.com/psf/black) for formatting.

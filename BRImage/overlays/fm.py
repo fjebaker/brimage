@@ -35,16 +35,21 @@ class FreqModOverlay(OverlayBase):
 
     def map_freq_modulation(self, greyscale=True, numdevs=0, lowpass=0, **kwargs):
         """ calculates frequency modulation and imposes it on the return image """
-        img = np.array(self._gimage.get_image())
+        img = self._get_gimage_data("RGB")
         self.greyscale = greyscale
         self._set_hyper_parameters(**kwargs)
 
+        logger.debug("Image shape {}".format(img.shape))
+
         if greyscale:
+            logger.debug("Greyscale")
             img = np.mean(img, axis=2)
-            self._image = self._apply_to(img, lowpass)
+
+            self.image = self._apply_to(img, lowpass)
             if numdevs > 0:
-                self._image = self._take_distribution(self._image, numdevs)
+                self.image = self._take_distribution(self.image, numdevs)
         else:
+            logger.debug("Colour")
             image = np.zeros((self.height, self.width, 3), dtype=np.uint8)
             for i in range(img.shape[-1]):
                 print(f"Processing channel {i}")
@@ -55,7 +60,7 @@ class FreqModOverlay(OverlayBase):
                     channel = self._take_distribution(channel, numdevs)
 
                 image[..., i] = channel
-            self._image = image
+            self.image = image
 
     def _take_distribution(self, layer, numdevs):
         """ map mean + (stds_from_mean) * std to 255, otherwise 0 in image """
@@ -72,12 +77,15 @@ class FreqModOverlay(OverlayBase):
 
     def _apply_to(self, channel, lowpass):
         """ applies the FM algorithm to a specific channel """
+        logger.debug("applying frequency modulation")
         new_channel = []
         for row in channel:
             row = freqmod_row(row, self.width, self.max_phase, self.omega)
             if lowpass > 0.000001:  # float comparsison check
                 row = self._lowpass(row, lowpass)
             new_channel.append(row)
+        
+        logger.debug("frequency modulation done")
 
         new_channel = np.array(new_channel)
         new_channel = remap(
@@ -113,7 +121,7 @@ class FreqModOverlay(OverlayBase):
         image = np.round_(remap(self._image, 0, 255, 0, quant))
         self._image = remap(image, 0, quant, 0, 255)
 
-    def save(self, name, **kwargs):
+    def _old_save(self, name, **kwargs):
         self._image_to_pil_image()
         self.expand(100)
         super().save(name, **kwargs)

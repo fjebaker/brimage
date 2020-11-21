@@ -28,20 +28,21 @@ class RandomWalkOverlay(OverlayBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # fix: add border to prevent seg fault
-        self.expand(100)
+        # self.expand(100) -> this is moved to the OverlayBase class
 
     def map_random_walk(self, lines=500, greyscale=False):
         # convert to grey scale; colour is TODO
+        image = self.image
+        
         if greyscale:
-            reference = np.array(self._gimage.get_image().convert("L"))
-            image = np.array(self._image.convert("L"))
+            reference = self._get_gimage_data()
+            imagee = np.mean(image, axis=2)
             # lower arrays into clib
             ref_canvas = MonochomeCanvas(reference)
             img_canvas = MonochomeCanvas(image)
             _random_walk_func = random_walk_monochrome
         else:
-            reference = np.array(self._gimage.get_image().convert("RGB"))
-            image = np.array(self._image.convert("RGB"))
+            reference = self._get_gimage_data("RGB")
             # lower arrays into clib
             ref_canvas = RGBCanvas(reference)
             img_canvas = RGBCanvas(image)
@@ -57,4 +58,4 @@ class RandomWalkOverlay(OverlayBase):
         cli_logger.info("Drawing lines {}..!".format(lines))
         print_memory_usage()
 
-        self._image = image
+        self.image = image

@@ -26,9 +26,6 @@ except:
 
     exit(1)
 
-class _Frame(np.ndarray):
-    ...
-
 
 class VidIO(_Image):
     def __init__(self, path_to_video, num_frames=None, output_framerate=None):
@@ -41,7 +38,7 @@ class VidIO(_Image):
             logger.warning("No stream found in input video.")
             self.width = 0
             self.height = 0
-            self.native_frame_rate = 0
+            self.native_framerate = 0
         else:
             self.width = int(video_stream["width"])
             self.height = int(video_stream["height"])
@@ -54,7 +51,7 @@ class VidIO(_Image):
         )
 
         self._num_frames = num_frames
-        self._output_framerate = output_framerate
+        self.output_framerate = output_framerate
         self._path = path_to_video
         self._out_pipe = ""
 
@@ -98,8 +95,9 @@ class VidIO(_Image):
         out_config = dict(pix_fmt="yuv420p")
 
         # add additional config
-        if self._output_framerate is not None:
-            out_config["r"] = self._output_framerate
+        if self.output_framerate is None:
+            self.output_framerate = self.native_framerate
+        out_config["r"] = self.output_framerate
 
         logger.debug(f"Output Configuration {out_config}")
 
@@ -128,6 +126,12 @@ class VidIO(_Image):
             logger.error(traceback)
             raise exc_value
 
+    def _timestamp_offsets(self, counter):
+        """ calculates the time stamp from the framerate of the source and destination stream """
+        native_time = counter * 1 / self.native_framerate
+        dest_time = counter * 1 / self.output_framerate
+        return native_time, dest_time
+
     def __iter__(self):
         counter = 0
         logger.debug("Iterator started...")
@@ -135,14 +139,15 @@ class VidIO(_Image):
             counter += 1
             # logger.debug(f"Counter at {counter}")
             bytestream = self._in_pipe.stdout.read(
-                self.width * self.height * 3 # RGB frame
+                self.width * self.height * 3  #  RGB frame
             )
             # logger.debug(f"read in {len(bytestream)} bytes")
             if bytestream:
                 frame = np.frombuffer(bytestream, np.uint8).reshape(
                     [self.height, self.width, 3]
                 )
-                yield frame
+                in_time, out_time = self._timestamp_offsets(counter)
+                yield frame, in_time, out_time
             else:
                 logger.debug("stream exhausted")
                 break

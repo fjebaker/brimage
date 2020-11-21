@@ -144,6 +144,7 @@ python BRImage
 
 ## Changelog <a name="toc-sub-tag-6"></a>
 
+- 0.2.1: Finished the video input feeds, and implementation for the frequency modulation part of video glitches. No CLI options for this available yet.
 - 0.2.0: Major refactor, favouring Feed derived classes as abstraction for image input.
 - 0.1.11: Staged some video I/O wrappers.
 - 0.1.10: Introduced `numdevs` contrasting parameter in frequency modulation.

@@ -28,12 +28,13 @@ class RandomWalkOverlay(OverlayBase):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # fix: add border to prevent seg fault
-        # self.expand(100) -> this is moved to the OverlayBase class
+        self._expand(100) # fix for some segfaults in randomwalk
+        self._make_canvas()
 
     def map_random_walk(self, lines=500, greyscale=False):
         # convert to grey scale; colour is TODO
         image = self.image
-        
+
         if greyscale:
             reference = self._get_gimage_data()
             imagee = np.mean(image, axis=2)

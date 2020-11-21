@@ -43,6 +43,7 @@ class _Image:
             logger.debug("Setting image type to {}".format(type(image)))
             self._image_type = type(image)
             self._image = image
+            self._update_shape()
 
         else: 
             raise Exception("Bad image type: {}".format(type(image)))

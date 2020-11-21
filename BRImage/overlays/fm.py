@@ -39,6 +39,8 @@ class FreqModOverlay(OverlayBase):
         self.greyscale = greyscale
         self._set_hyper_parameters(**kwargs)
 
+        logger.debug(f"FreqModOverlay@{id(self)}: omega: {self.omega}, phase: {self.max_phase}, lowpass: {lowpass}, pquantize: {self.quantization}, numdevs: {numdevs}")
+
         logger.debug("Image shape {}".format(img.shape))
 
         if greyscale:
@@ -120,8 +122,3 @@ class FreqModOverlay(OverlayBase):
         """ apply quantization after the image has been generated """
         image = np.round_(remap(self._image, 0, 255, 0, quant))
         self._image = remap(image, 0, quant, 0, 255)
-
-    def _old_save(self, name, **kwargs):
-        self._image_to_pil_image()
-        self.expand(100)
-        super().save(name, **kwargs)

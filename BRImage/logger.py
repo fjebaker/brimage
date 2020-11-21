@@ -43,5 +43,5 @@ def _cli_logger():
     return console_logger
 
 
-brimage_logger = _configure_logging(logging.DEBUG, show=True)
+brimage_logger = _configure_logging(logging.DEBUG, show=False)
 cli_logger = _cli_logger()

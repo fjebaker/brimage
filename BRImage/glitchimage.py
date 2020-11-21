@@ -1,6 +1,8 @@
 from BRImage.glitchcore.image import _Image
 from BRImage.overlays import FreqModOverlay, RandomWalkOverlay
 
+import numpy as np
+
 import logging
 logger = logging.getLogger(__name__)
 
@@ -12,23 +14,28 @@ except ImportError:
 
 
 class GlitchImage(_Image):
-    def __init__(self, path=None, data=None):
+    def __init__(self, *args):
         """ Construct a GlitchImage from either an image path, or a data frame """
         super().__init__()
 
-        if path and data:
-            raise Exception("Cannot create a GlitchImage instance from both path and data. Please use only one kwarg.")
-        elif path:
-            self._load_from_path(path)
-        elif data:
-            self._load_from_data(data)
+        if len(args) > 1:
+            raise Exception("Too many arguments provided.")
         else:
-            raise Exception("No valid path or data arguments provided.")
-            
+            arg = args[0]
+            if type(arg) == str: 
+                logger.debug("GlitchImage from path {}".format(arg))
+                self._load_from_path(arg)
+            elif type(arg) == np.ndarray:
+                logger.debug("GlitchImage from data with shape {}".format(arg.shape))
+                self._load_from_data(arg)
+            else:
+                raise Exception("Argument must be type string or ndarray.")
+        
+        logger.info(f"GlitchImage@{id(self)}: width: {self.width}, height: {self.height}")
         
     def _load_from_data(self, data):
         self._path = ":memory:"
-        self.image = PILImage.fromarray(np.uin8(data))
+        self.image = PILImage.fromarray(np.uint8(data))
         self.width, self.height = self.image.size
     
     def _load_from_path(self, path):

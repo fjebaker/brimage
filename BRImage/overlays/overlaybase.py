@@ -12,11 +12,11 @@ class OverlayBase(_Image):
         self._gimage = gimage
         self._init_colours = (rinit, ginit, binit)
 
-        self._expand(100) # fix for some segfaults in randomwalk
+        self._make_canvas()
 
-        self.width, self.height = gimage.width, gimage.height
+    def _make_canvas(self):
         self.image = np.array(PIL.Image.new(
-            "RGB", [gimage.width, gimage.height], (rinit, ginit, binit)
+            "RGB", [self._gimage.width, self._gimage.height], self._init_colours
         ))
 
     def _image_to_pil_image(self):

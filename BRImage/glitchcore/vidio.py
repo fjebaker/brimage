@@ -1,5 +1,6 @@
 import os
 import fractions
+import traceback
 
 import numpy as np
 
@@ -114,7 +115,11 @@ class VidIO(_Image):
             .run_async(pipe_stdin=True, pipe_stderr=True)
         )
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, tb):
+        if exc_type:
+            logger.error(exc_value)
+            traceback.print_tb(tb)
+
         logger.debug("__exit__ called; closing pipes...")
         self._out_pipe.stdin.close()
         self._out_pipe.wait()
@@ -122,8 +127,6 @@ class VidIO(_Image):
         logger.debug("pipes closed.")
 
         if exc_type:
-            logger.error(exc_value)
-            logger.error(traceback)
             raise exc_value
 
     def _timestamp_offsets(self, counter):
@@ -137,7 +140,7 @@ class VidIO(_Image):
         logger.debug("Iterator started...")
         while True:
             counter += 1
-            # logger.debug(f"Counter at {counter}")
+            logger.info(f"Processing frame {counter}")
             bytestream = self._in_pipe.stdout.read(
                 self.width * self.height * 3  #  RGB frame
             )
@@ -149,7 +152,7 @@ class VidIO(_Image):
                 in_time, out_time = self._timestamp_offsets(counter)
                 yield frame, in_time, out_time
             else:
-                logger.debug("stream exhausted")
+                logger.info("input stream exhausted")
                 break
         logger.debug("Iterator ended.")
 

@@ -80,13 +80,12 @@ constexpr void Canvas::stroke(int x, int y, const C &c) noexcept {
 
 constexpr bool Canvas::in_bounds(int x, int y) const noexcept {
   /* branchless version of
-      if (x < 0 || x >= width || y < 0 || y >= height) {
-        return false;
-      } else {
-        return true;
-      }
-  */
-  return (bool)(1 - (x < 0) * (x >= width) * (y < 0) * (y >= height));
+  if (x < 0 || x >= width || y < 0 || y >= height) {
+    return false;
+  } else {
+    return true;
+  } */
+  return !(x < 0 || x >= width || y < 0 || y >= height);
 }
 
 #endif

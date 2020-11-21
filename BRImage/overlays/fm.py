@@ -2,7 +2,7 @@ import numpy as np
 from scipy.signal import butter, filtfilt, freqz
 
 from BRImage.glitchcore.helper import remap
-from BRImage.overlays.overlaybase import OverlayBase
+from BRImage.overlays.base_overlay import BaseOverlay
 from BRImage.clib.algorithms import freqmod_row
 
 import logging
@@ -25,7 +25,7 @@ def _butter_lowpass_filter(data, cutoff, fs, order=5):
     return y
 
 
-class FreqModOverlay(OverlayBase):
+class FreqModOverlay(BaseOverlay):
     """ Frequncy Modulation Overlay """
 
     def __init__(self, *args, **kwargs):
@@ -39,7 +39,9 @@ class FreqModOverlay(OverlayBase):
         self.greyscale = greyscale
         self._set_hyper_parameters(**kwargs)
 
-        logger.debug(f"FreqModOverlay@{id(self)}: omega: {self.omega}, phase: {self.max_phase}, lowpass: {lowpass}, pquantize: {self.quantization}, numdevs: {numdevs}")
+        logger.debug(
+            f"FreqModOverlay@{id(self)}: omega: {self.omega}, phase: {self.max_phase}, lowpass: {lowpass}, pquantize: {self.quantization}, numdevs: {numdevs}"
+        )
 
         logger.debug("Image shape {}".format(img.shape))
 
@@ -86,7 +88,7 @@ class FreqModOverlay(OverlayBase):
             if lowpass > 0.000001:  # float comparsison check
                 row = self._lowpass(row, lowpass)
             new_channel.append(row)
-        
+
         logger.debug("frequency modulation done")
 
         new_channel = np.array(new_channel)

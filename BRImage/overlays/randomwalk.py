@@ -1,6 +1,6 @@
 import numpy as np
 
-from BRImage.overlays.overlaybase import OverlayBase
+from BRImage.overlays.base_overlay import BaseOverlay
 from BRImage.clib.algorithms import (
     MonochomeCanvas,
     RGBCanvas,
@@ -24,11 +24,11 @@ def print_memory_usage():
     )
 
 
-class RandomWalkOverlay(OverlayBase):
+class RandomWalkOverlay(BaseOverlay):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # fix: add border to prevent seg fault
-        self._expand(100) # fix for some segfaults in randomwalk
+        self._expand(100)  #  fix for some segfaults in randomwalk
         self._make_canvas()
 
     def map_random_walk(self, lines=500, greyscale=False):
@@ -50,13 +50,18 @@ class RandomWalkOverlay(OverlayBase):
             _random_walk_func = random_walk_rgb
 
         print_memory_usage()
+        cli_logger.info("Drawing lines...")
+
+        quartile = int(lines/4)
+        quartile_count = 0
         for i in range(lines):
             #  have to use print() for carriage return
-            print("Drawing lines {}...".format(i), end="\r")
-            # cli_logger.info("Drawing lines {}\r".format(i))
+            if i % quartile == 0:
+                quartile_count += 25
+                cli_logger.info(f"{quartile_count}% done...")
             _random_walk_func(ref_canvas, img_canvas)
 
-        cli_logger.info("Drawing lines {}..!".format(lines))
+        cli_logger.info(f"Drawing lines 100% done!")
         print_memory_usage()
 
         self.image = image

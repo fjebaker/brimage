@@ -1,9 +1,12 @@
 from BRImage.glitchcore.image import _Image
+from BRImage.feeds import GlitchImageFeed
+
 from BRImage.overlays import FreqModOverlay, RandomWalkOverlay
 
 import numpy as np
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -22,7 +25,7 @@ class GlitchImage(_Image):
             raise Exception("Too many arguments provided.")
         else:
             arg = args[0]
-            if type(arg) == str: 
+            if type(arg) == str:
                 logger.debug("GlitchImage from path {}".format(arg))
                 self._load_from_path(arg)
             elif type(arg) == np.ndarray:
@@ -30,14 +33,16 @@ class GlitchImage(_Image):
                 self._load_from_data(arg)
             else:
                 raise Exception("Argument must be type string or ndarray.")
-        
-        logger.info(f"GlitchImage@{id(self)}: width: {self.width}, height: {self.height}")
-        
+
+        logger.info(
+            f"GlitchImage@{id(self)}: width: {self.width}, height: {self.height}"
+        )
+
     def _load_from_data(self, data):
         self._path = ":memory:"
         self.image = PILImage.fromarray(np.uint8(data))
         self.width, self.height = self.image.size
-    
+
     def _load_from_path(self, path):
         self._path = path
         self.image = PILImage.open(path).convert("RGB")
@@ -48,8 +53,10 @@ class GlitchImage(_Image):
 
     def freqmod_overlay(self, **kwargs):
         """ frequency modulation overlay getter """
-        return FreqModOverlay(self, **kwargs)
+        feed = GlitchImageFeed(self)
+        return FreqModOverlay(feed, **kwargs)
 
     def random_walk_overlay(self, **kwargs):
         """ frequency modulation overlay getter """
-        return RandomWalkOverlay(self, **kwargs)
+        feed = GlitchImageFeed(self)
+        return RandomWalkOverlay(feed, **kwargs)

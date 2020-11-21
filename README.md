@@ -144,6 +144,7 @@ python BRImage
 
 ## Changelog <a name="toc-sub-tag-6"></a>
 
+- 0.2.2: Fixed segfault related bugs; cleaned code and implemented random walk for video feeds.
 - 0.2.1: Finished the video input feeds, and implementation for the frequency modulation part of video glitches. No CLI options for this available yet.
 - 0.2.0: Major refactor, favouring Feed derived classes as abstraction for image input.
 - 0.1.11: Staged some video I/O wrappers.
@@ -157,3 +158,11 @@ python BRImage
 ---
 
 Uses [ffmeg](https://github.com/kkroening/ffmpeg-python) for Video I/O, [pillow](https://github.com/python-pillow/Pillow) for Image I/O, [numpy](https://github.com/numpy/numpy) as the workhorse and [black](https://github.com/psf/black) for formatting.
+
+---
+
+
+Todo:
+
+- phase damping option on frequency modulation
+- seed points for random walk

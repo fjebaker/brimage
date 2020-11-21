@@ -10,7 +10,7 @@ def _run(ginput, lines=500, greyscale=False, **kwargs):
         )
     )
     rw = ginput.random_walk_overlay(rinit=35, ginit=32, binit=28)
-    rw.map_random_walk(lines=lines, greyscale=greyscale)
+    rw.map_algorithm(lines=lines, greyscale=greyscale)
     rw.apply()
     return ginput
 

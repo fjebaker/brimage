@@ -33,14 +33,14 @@ class FreqModOverlay(BaseOverlay):
         self.min_phase = 0
         self.max_phase = 0
 
-    def map_freq_modulation(self, greyscale=True, numdevs=0, lowpass=0, **kwargs):
+    def map_algorithm(self, greyscale=True, numdevs=0, lowpass=0, **kwargs):
         """ calculates frequency modulation and imposes it on the return image """
-        img = self._get_gimage_data("RGB")
+        img = self._get_from_feed("RGB")
         self.greyscale = greyscale
         self._set_hyper_parameters(**kwargs)
 
         logger.debug(
-            f"FreqModOverlay@{id(self)}: omega: {self.omega}, phase: {self.max_phase}, lowpass: {lowpass}, pquantize: {self.quantization}, numdevs: {numdevs}"
+            f"FreqModOverlay@{id(self)}: adjusted omega: {self.omega}, adjusted phase: {self.max_phase}, lowpass: {lowpass}, pquantize: {self.quantization}, numdevs: {numdevs}"
         )
 
         logger.debug("Image shape {}".format(img.shape))
@@ -65,6 +65,8 @@ class FreqModOverlay(BaseOverlay):
 
                 image[..., i] = channel
             self.image = image
+        
+        return self.image
 
     def _take_distribution(self, layer, numdevs):
         """ map mean + (stds_from_mean) * std to 255, otherwise 0 in image """

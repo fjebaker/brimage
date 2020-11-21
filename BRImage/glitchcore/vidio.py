@@ -28,7 +28,7 @@ except:
     exit(1)
 
 
-class VidIO(_Image):
+class _VidIO(_Image):
     def __init__(self, path_to_video, num_frames=None, output_framerate=None):
         probe = ffmpeg.probe(path_to_video)
         video_stream = next(
@@ -56,6 +56,9 @@ class VidIO(_Image):
         self._path = path_to_video
         self._out_pipe = ""
 
+    def set_num_frames(self, num):
+        self._num_frames = num
+
     def output(self, filename):
         self._out_path = filename
         return self
@@ -72,7 +75,7 @@ class VidIO(_Image):
         self._out_pipe = self._open_output_pipeline()
 
         logger.debug("IO pipes open, returning from __enter__")
-        return self
+        return iter(self)
 
     def _open_input_pipeline(self):
         # create input configuration dictionary

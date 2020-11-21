@@ -8,7 +8,7 @@ def _run(ginput, omega=0.3, phase=0.5, lowpass=0, pquantize=0, numdevs=0, **kwar
         f"Frequency modulation with omega {omega:.3f}, phase {phase:.3f}, lowpass {lowpass:.3f}, pquantize {pquantize}, numdevs {numdevs}."
     )
     fm = ginput.freqmod_overlay(rinit=0, ginit=0, binit=0)
-    fm.map_freq_modulation(omega=omega, phase=phase, lowpass=lowpass, numdevs=numdevs)
+    fm.map_algorithm(omega=omega, phase=phase, lowpass=lowpass, numdevs=numdevs)
     if pquantize > 0:
         fm.post_quantize(pquantize)
     fm.apply()

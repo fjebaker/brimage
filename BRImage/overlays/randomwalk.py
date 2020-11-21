@@ -27,23 +27,25 @@ def print_memory_usage():
 class RandomWalkOverlay(BaseOverlay):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def map_algorithm(self, lines=500, greyscale=False):
+        # convert to grey scale; colour is TODO
+
         # fix: add border to prevent seg fault
         self._expand(100)  #  fix for some segfaults in randomwalk
         self._make_canvas()
 
-    def map_random_walk(self, lines=500, greyscale=False):
-        # convert to grey scale; colour is TODO
         image = self.image
 
         if greyscale:
-            reference = self._get_gimage_data()
+            reference = self._get_from_feed()
             imagee = np.mean(image, axis=2)
             # lower arrays into clib
             ref_canvas = MonochomeCanvas(reference)
             img_canvas = MonochomeCanvas(image)
             _random_walk_func = random_walk_monochrome
         else:
-            reference = self._get_gimage_data("RGB")
+            reference = self._get_from_feed("RGB")
             # lower arrays into clib
             ref_canvas = RGBCanvas(reference)
             img_canvas = RGBCanvas(image)
@@ -52,7 +54,7 @@ class RandomWalkOverlay(BaseOverlay):
         print_memory_usage()
         cli_logger.info("Drawing lines...")
 
-        quartile = int(lines/4)
+        quartile = int(lines / 4)
         quartile_count = 0
         for i in range(lines):
             #  have to use print() for carriage return
@@ -65,3 +67,6 @@ class RandomWalkOverlay(BaseOverlay):
         print_memory_usage()
 
         self.image = image
+        self._reduce(100)  #  undo expansion
+
+        return self.image 

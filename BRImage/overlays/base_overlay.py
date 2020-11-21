@@ -35,17 +35,18 @@ class BaseOverlay(_Image, abc.ABC):
     def _get_from_feed(self, colourfmt="L"):
         """ Returns np array of the original GlitchImage in the given colour format """
         return self._feed._as_array(colourfmt)
-        # np.array(self._gimage.image.convert(colourfmt))
 
     def _get_data(self):
         """ Returns np array of the image data """
         return self.image
 
     def _expand(self, width):
+        #  deprecated: will be removed
         logger.debug("Expanding by margin: {}".format(width))
         self._feed._expand(width, self._init_colours)
 
     def _reduce(self, width):
+        #  deprecated: will be removed
         logger.debug("Reducing by margin: {}".format(width))
         out_image = []
         for i in range(self.image.shape[-1]):

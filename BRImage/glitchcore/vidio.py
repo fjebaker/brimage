@@ -119,6 +119,7 @@ class _VidIO(_Image):
         )
 
     def __exit__(self, exc_type, exc_value, tb):
+        logger.info("exc_type {}, exc_value {}".format(exc_value, exc_value))
         if exc_type:
             logger.error(exc_value)
             traceback.print_tb(tb)
@@ -147,7 +148,7 @@ class _VidIO(_Image):
             bytestream = self._in_pipe.stdout.read(
                 self.width * self.height * 3  #  RGB frame
             )
-            # logger.debug(f"read in {len(bytestream)} bytes")
+            logger.debug(f"read in {len(bytestream)} bytes")
             if bytestream:
                 frame = np.frombuffer(bytestream, np.uint8).reshape(
                     [self.height, self.width, 3]
@@ -162,4 +163,4 @@ class _VidIO(_Image):
     def save(self, frame):
         """ override: save the video from output frames """
         self._out_pipe.stdin.write(frame.astype(np.uint8).tobytes())
-        # logger.debug("frame written to pipe")
+        logger.debug("frame written to pipe")

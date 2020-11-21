@@ -32,7 +32,6 @@ class RandomWalkOverlay(BaseOverlay):
         # convert to grey scale; colour is TODO
 
         # fix: add border to prevent seg fault
-        self._expand(100)  #  fix for some segfaults in randomwalk
         self._make_canvas()
 
         image = self.image
@@ -67,6 +66,5 @@ class RandomWalkOverlay(BaseOverlay):
         print_memory_usage()
 
         self.image = image
-        self._reduce(100)  #  undo expansion
 
-        return self.image 
+        return self.image

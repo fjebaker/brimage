@@ -7,7 +7,7 @@ class GlitchVideoFeed(BaseFeed):
         self.gvideo = gvideo
 
         self._staged_frame = None
-        self._new_frame = None 
+        self._new_frame = None
 
     @property
     def width(self):
@@ -29,4 +29,5 @@ class GlitchVideoFeed(BaseFeed):
         self._new_frame = new_image
 
     def _expand(self, width, colours):
+        #  deprecated: will be removed
         pass

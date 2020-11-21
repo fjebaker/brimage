@@ -65,7 +65,7 @@ class FreqModOverlay(BaseOverlay):
 
                 image[..., i] = channel
             self.image = image
-        
+
         return self.image
 
     def _take_distribution(self, layer, numdevs):

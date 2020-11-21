@@ -26,6 +26,7 @@ class GlitchImageFeed(BaseFeed):
         return np.array(self.gimage.image.convert(colourfmt))
 
     def _expand(self, width, colours):
+        #  deprecated: will be removed
         try:
             self.gimage.expand(100, colours)
         except TypeError:

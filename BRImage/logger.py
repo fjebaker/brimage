@@ -29,6 +29,8 @@ def _configure_logging(level, show=False):
 
         logger.addHandler(handler)
         logger.setLevel(level)
+    else:
+        logger.setLevel(logging.ERROR)
     return logger
 
 
@@ -43,5 +45,5 @@ def _cli_logger():
     return console_logger
 
 
-brimage_logger = _configure_logging(logging.DEBUG, show=False)
+brimage_logger = _configure_logging(logging.DEBUG, show=True)
 cli_logger = _cli_logger()

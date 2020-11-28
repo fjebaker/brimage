@@ -26,7 +26,7 @@ def print_memory_usage():
     )
 
 
-@functools.cache
+@functools.lru_cache(None)
 def _get_init_point(i, x_max, y_max):
     """ Generates initializing points for the random walk; caches so that they are always the same for a given session """
     x, y = random.randint(0, x_max - 1), random.randint(0, y_max - 1)

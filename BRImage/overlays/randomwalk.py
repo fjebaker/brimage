@@ -9,6 +9,8 @@ from BRImage.clib.algorithms import (
 )
 
 import resource
+import functools
+import random
 from BRImage.logger import cli_logger
 
 import logging
@@ -22,6 +24,13 @@ def print_memory_usage():
             resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1000 ** 2
         )
     )
+
+
+@functools.cache
+def _get_init_point(i, x_max, y_max):
+    """ Generates initializing points for the random walk; caches so that they are always the same for a given session """
+    x, y = random.randint(0, x_max - 1), random.randint(0, y_max - 1)
+    return x, y
 
 
 class RandomWalkOverlay(BaseOverlay):
@@ -60,7 +69,8 @@ class RandomWalkOverlay(BaseOverlay):
             if i % quartile == 0:
                 quartile_count += 25
                 cli_logger.info(f"{quartile_count}% done...")
-            _random_walk_func(ref_canvas, img_canvas)
+            x, y = _get_init_point(i, self.width, self.height)
+            _random_walk_func(ref_canvas, img_canvas, x, y)
 
         cli_logger.info(f"Drawing lines 100% done!")
         print_memory_usage()

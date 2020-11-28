@@ -24,7 +24,8 @@ inline constexpr double calc_diff(const SubCanvas &reference,
 }
 
 template <class T>
-void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
+void random_walk(const Canvas &reference, Canvas &canvas, int x_init,
+                 int y_init) noexcept {
   const int width = reference.get_width();
   const int height = reference.get_height();
 
@@ -37,8 +38,16 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
   }
 
   // current x and y values, corrected for the size of the region
-  int currx = rand() % (width - SQ_WIDTH) + MID_SQ_WIDTH;
-  int curry = rand() % (height - SQ_WIDTH) + MID_SQ_WIDTH;
+  int currx = x_init;
+  int curry = y_init;
+
+  if (currx < MID_SQ_WIDTH || currx > width - MID_SQ_WIDTH) {
+    currx = rand() % (width - SQ_WIDTH) +
+            MID_SQ_WIDTH; // if outside of bounds, use random value
+  }
+  if (curry < MID_SQ_WIDTH || curry > height - MID_SQ_WIDTH) {
+    curry = rand() % (height - SQ_WIDTH) + MID_SQ_WIDTH;
+  }
 
   SubCanvas impart;
   SubCanvas rw_part;
@@ -119,12 +128,13 @@ void random_walk(const Canvas &reference, Canvas &canvas) noexcept {
 
 template <>
 void random_walk_template(const MonochomeCanvas &reference,
-                          MonochomeCanvas &canvas) noexcept {
-  random_walk<Grey>(reference, canvas);
+                          MonochomeCanvas &canvas, int x_init,
+                          int y_init) noexcept {
+  random_walk<Grey>(reference, canvas, x_init, y_init);
 }
 
 template <>
-void random_walk_template(const RGBCanvas &reference,
-                          RGBCanvas &canvas) noexcept {
-  random_walk<RGB>(reference, canvas);
+void random_walk_template(const RGBCanvas &reference, RGBCanvas &canvas,
+                          int x_init, int y_init) noexcept {
+  random_walk<RGB>(reference, canvas, x_init, y_init);
 }

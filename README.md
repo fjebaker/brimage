@@ -124,6 +124,10 @@ The next stage can be done in a few different ways:
 
 Build the project with the `--target` pip flag, to prevent it from being installed into the environment:
 ```bash
+pip install --target build .
+```
+alternatively, use the develop mode
+```
 pip install -e .
 ```
 

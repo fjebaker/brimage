@@ -11,4 +11,4 @@ HEADER = r"""
     VERSION
 )
 
-import BRImage.logger
+import brimage.logger

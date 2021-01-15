@@ -1,9 +1,9 @@
 import numpy as np
 from scipy.signal import butter, filtfilt, freqz
 
-from BRImage.glitchcore.helper import remap
-from BRImage.overlays.base_overlay import BaseOverlay
-from BRImage.clib.algorithms import freqmod_row
+from brimage.glitchcore.helper import remap
+from brimage.overlays.base_overlay import BaseOverlay
+from brimage.clib.algorithms import freqmod_row
 
 import logging
 

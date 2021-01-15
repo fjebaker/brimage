@@ -1,7 +1,7 @@
-from BRImage.glitchcore.vidio import _VidIO
-from BRImage.feeds import GlitchVideoFeed
+from brimage.glitchcore.vidio import _VidIO
+from brimage.feeds import GlitchVideoFeed
 
-from BRImage.overlays import FreqModOverlay, RandomWalkOverlay
+from brimage.overlays import FreqModOverlay, RandomWalkOverlay
 
 import logging
 

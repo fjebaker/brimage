@@ -1,7 +1,7 @@
-from BRImage.glitchcore.image import _Image
-from BRImage.feeds import GlitchImageFeed
+from brimage.glitchcore.image import _Image
+from brimage.feeds import GlitchImageFeed
 
-from BRImage.overlays import FreqModOverlay, RandomWalkOverlay
+from brimage.overlays import FreqModOverlay, RandomWalkOverlay
 
 import numpy as np
 

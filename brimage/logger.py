@@ -18,7 +18,7 @@ class CLIFormatter(logging.Formatter):
 
 
 def _configure_logging(level, show=False):
-    logger = logging.getLogger("BRImage")
+    logger = logging.getLogger("brimage")
     if show:
         formatter = logging.Formatter(
             "%(asctime)s | %(levelname)s | %(name)s: %(message)s"

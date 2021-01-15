@@ -1,7 +1,7 @@
 import numpy as np
 
-from BRImage.overlays.base_overlay import BaseOverlay
-from BRImage.clib.algorithms import (
+from brimage.overlays.base_overlay import BaseOverlay
+from brimage.clib.algorithms import (
     MonochomeCanvas,
     RGBCanvas,
     random_walk_monochrome,
@@ -11,7 +11,7 @@ from BRImage.clib.algorithms import (
 import resource
 import functools
 import random
-from BRImage.logger import cli_logger
+from brimage.logger import cli_logger
 
 import logging
 

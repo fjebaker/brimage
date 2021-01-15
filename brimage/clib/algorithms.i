@@ -1,4 +1,4 @@
-%module(package="BRImage.clib") algorithms
+%module(package="brimage.clib") algorithms
 
 %{
     #define SWIG_FILE_WITH_INIT

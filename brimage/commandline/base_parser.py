@@ -2,17 +2,17 @@ import argparse
 import os
 import time
 
-from BRImage import VERSION, HEADER
-from BRImage.glitchimage import GlitchImage
-from BRImage.logger import cli_logger
+from brimage import VERSION, HEADER
+from brimage.glitchimage import GlitchImage
+from brimage.logger import cli_logger
 
 import logging
 
 logger = logging.getLogger(__name__)
 
 cli = argparse.ArgumentParser(
-    prog="BRImage",
-    description=f"CLI for BRImage library {VERSION}.",
+    prog="brimage",
+    description=f"CLI for brimage library {VERSION}.",
     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
 )
 sub_parser = cli.add_subparsers(dest="subcommand")

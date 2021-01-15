@@ -1,4 +1,4 @@
-from BRImage.glitchcore.image import _Image
+from brimage.glitchcore.image import _Image
 import abc
 
 import PIL

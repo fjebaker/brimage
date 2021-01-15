@@ -1,4 +1,4 @@
-from BRImage.commandline import cli
+from brimage.commandline import cli
 
 
 def main():

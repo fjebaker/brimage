@@ -5,8 +5,8 @@ import traceback
 import numpy as np
 
 
-from BRImage.glitchcore.helper import get_temporary_directory
-from BRImage.glitchcore.image import _Image
+from brimage.glitchcore.helper import get_temporary_directory
+from brimage.glitchcore.image import _Image
 
 import logging
 

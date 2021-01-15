@@ -1,4 +1,4 @@
-from BRImage.feeds.base_feed import BaseFeed
+from brimage.feeds.base_feed import BaseFeed
 
 import PIL
 import numpy as np

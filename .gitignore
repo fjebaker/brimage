@@ -132,7 +132,7 @@ dmypy.json
 __samples
 algoltest.py
 *.so
-BRImage/clib/algorithms.py
-BRImage/clib/algorithms_wrap.cxx
-BRImage/clib/numpy.i
+brimage/clib/algorithms.py
+brimage/clib/algorithms_wrap.cxx
+brimage/clib/numpy.i
 .ccls-cache

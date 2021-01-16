@@ -1,5 +1,5 @@
-exclude BRImage/clib/*.so
-include BRImage/clib/*.hpp
-include BRImage/clib/*.cpp
+exclude brimage/clib/*.so
+include brimage/clib/*.hpp
+include brimage/clib/*.cpp
 include README.md
 exclude *.jpg

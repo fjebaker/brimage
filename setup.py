@@ -1,20 +1,20 @@
 from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
-from BRImage import VERSION
+from brimage import VERSION
 import os
 
 import numpy as np
 
 algorithms = Extension(
-    "BRImage.clib._algorithms",
+    "brimage.clib._algorithms",
     sources=[
-        os.path.join("BRImage", "clib", "freqmod.cpp"),
-        os.path.join("BRImage", "clib", "randomwalk.cpp"),
-        os.path.join("BRImage", "clib", "canvas", "subcanvas.cpp"),
-        os.path.join("BRImage", "clib", "canvas", "canvas.cpp"),
-        os.path.join("BRImage", "clib", "shapes", "coord.cpp"),
-        os.path.join("BRImage", "clib", "shapes", "shapes.cpp"),
-        os.path.join("BRImage", "clib", "algorithms_wrap.cxx"),
+        os.path.join("brimage", "clib", "freqmod.cpp"),
+        os.path.join("brimage", "clib", "randomwalk.cpp"),
+        os.path.join("brimage", "clib", "canvas", "subcanvas.cpp"),
+        os.path.join("brimage", "clib", "canvas", "canvas.cpp"),
+        os.path.join("brimage", "clib", "shapes", "coord.cpp"),
+        os.path.join("brimage", "clib", "shapes", "shapes.cpp"),
+        os.path.join("brimage", "clib", "algorithms_wrap.cxx"),
     ],
     language="c++",
     extra_compile_args=["-std=c++17"],
@@ -25,16 +25,16 @@ with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
-    name="BRImage",
+    name="brimage",
     version=VERSION,
     description="Glitch Art Toolkit mimicking CRT monitor defects.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Dustpancake",
-    url="https://github.com/Dustpancake/BRImage",
+    url="https://github.com/Dustpancake/brimage",
     entry_points={
         "console_scripts": [
-            "brimage = BRImage.__main__:main",
+            "brimage = brimage.__main__:main",
         ],
     },
     packages=find_packages(),

@@ -5,9 +5,21 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+    path:
+      - "**.py"
+      - "**.cpp"
+      - "**.hpp"
+      - "**.i"
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+    path:
+      - "**.py"
+      - "**.cpp"
+      - "**.hpp"
+      - "**.i"
 
 jobs:
   build:
@@ -27,10 +39,10 @@ jobs:
         gcc --version
         clang --version
         python -m pip install --upgrade pip
-        curl "https://raw.githubusercontent.com/numpy/numpy/master/tools/swig/numpy.i" > BRImage/clib/numpy.i
+        curl "https://raw.githubusercontent.com/numpy/numpy/master/tools/swig/numpy.i" > brimage/clib/numpy.i
     - name: Run SWIG
       run: |
-        swig -c++ -python -py3 BRImage/clib/algorithms.i
+        swig -c++ -python -py3 brimage/clib/algorithms.i
     - name: Build and install with pip
       run: |
         CC=clang++ python -m pip install .
@@ -40,8 +52,8 @@ jobs:
     - name: Check CLI
       run: |
         brimage -h
-        python BRImage -h
-        python -m BRImage -h
+        python brimage -h
+        python -m brimage -h
     - name: Check algorithms
       run: |
         brimage freqmod examples/sample-image.jpg

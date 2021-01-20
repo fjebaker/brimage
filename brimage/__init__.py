@@ -1,3 +1,5 @@
+import brimage.logger
+
 VERSION = "0.2.3"
 HEADER = r"""
 '||'''|,  '||'''|, |''||''|
@@ -10,5 +12,3 @@ HEADER = r"""
 """.format(
     VERSION
 )
-
-import brimage.logger

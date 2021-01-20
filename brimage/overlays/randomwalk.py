@@ -47,7 +47,8 @@ class RandomWalkOverlay(BaseOverlay):
 
         if greyscale:
             reference = self._get_from_feed()
-            imagee = np.mean(image, axis=2)
+            image = np.mean(image, axis=2)
+
             # lower arrays into clib
             ref_canvas = MonochomeCanvas(reference)
             img_canvas = MonochomeCanvas(image)
@@ -72,7 +73,7 @@ class RandomWalkOverlay(BaseOverlay):
             x, y = _get_init_point(i, self.width, self.height)
             _random_walk_func(ref_canvas, img_canvas, x, y)
 
-        cli_logger.info(f"Drawing lines 100% done!")
+        cli_logger.info(r"Drawing lines 100% done!")
         print_memory_usage()
 
         self.image = image

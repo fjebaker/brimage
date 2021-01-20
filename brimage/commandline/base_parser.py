@@ -4,7 +4,7 @@ import time
 
 from brimage import VERSION, HEADER
 from brimage.glitchimage import GlitchImage
-from brimage.logger import cli_logger
+from brimage.logger import cli_logger, brimage_logger
 
 import logging
 

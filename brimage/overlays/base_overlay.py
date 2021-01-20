@@ -1,10 +1,10 @@
-from brimage.glitchcore.image import _Image
+import logging
 import abc
 
-import PIL
 import numpy as np
 
-import logging
+from brimage.glitchcore.image import _Image
+
 
 logger = logging.getLogger(__name__)
 

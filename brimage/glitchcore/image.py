@@ -1,15 +1,12 @@
-import numpy as np
-
 import logging
 
-logger = logging.getLogger(__name__)
+import numpy as np
 
-try:
-    import Image as PILImage
-except ImportError:
-    from PIL import Image as PILImage
-
+from PIL import Image as PILImage
 from PIL import ImageOps
+
+
+logger = logging.getLogger(__name__)
 
 
 class _Image:
@@ -40,7 +37,7 @@ class _Image:
 
             self._update_shape()
 
-        elif self._image_type == None:
+        elif self._image_type is None:
             logger.debug("Setting image type to {}".format(type(image)))
             self._image_type = type(image)
             self._image = image

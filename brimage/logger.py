@@ -1,5 +1,4 @@
 import logging
-import os
 
 _LEVEL_ENCODING = {
     "DEBUG": "\U0001F41B  ",

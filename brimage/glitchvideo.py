@@ -28,7 +28,7 @@ class GlitchVideo(_VidIO):
 
     def _do_mapping(self, Overlay):
 
-        if self._out_path == None:
+        if self._out_path is None:
             raise Exception("No output path defined.")
 
         logger.info("Saving output video as {}".format(self._out_path))

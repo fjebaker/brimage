@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.signal import butter, filtfilt, freqz
+from scipy.signal import butter, filtfilt
 
 from brimage.glitchcore.helper import remap
 from brimage.overlays.base_overlay import BaseOverlay

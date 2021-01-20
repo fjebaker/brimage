@@ -1,20 +1,16 @@
-import os
 import fractions
 import traceback
+import logging
 
 import numpy as np
 
-
-from brimage.glitchcore.helper import get_temporary_directory
 from brimage.glitchcore.image import _Image
-
-import logging
 
 logger = logging.getLogger(__name__)
 
 try:
-    import ffmpeg
-except:
+    import ffmpeg  # noqa: E402
+except ImportError:
     logger.fatal(
         (
             "No FFMPEG; for video IO brimage requires ffmepg. "
@@ -35,7 +31,7 @@ class _VidIO(_Image):
             (stream for stream in probe["streams"] if stream["codec_type"] == "video"),
             None,
         )
-        if video_stream == None:
+        if video_stream is None:
             logger.warning("No stream found in input video.")
             self.width = 0
             self.height = 0

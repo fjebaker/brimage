@@ -19,8 +19,9 @@ class BaseOverlay(_Image, abc.ABC):
 
         self._init_colours = (rinit, ginit, binit)
 
-    def map_algorithm(self, *args, **kwargs):
+    def map_algorithm(self, **kwargs):
         """ To override: invocation function """
+        # pylint: disable=unused-argument
         return self.image
 
     def _make_canvas(self):
@@ -34,7 +35,7 @@ class BaseOverlay(_Image, abc.ABC):
 
     def _get_from_feed(self, colourfmt="L"):
         """ Returns np array of the original GlitchImage in the given colour format """
-        return self._feed._as_array(colourfmt)
+        return self._feed.as_array(colourfmt)
 
     def _get_data(self):
         """ Returns np array of the image data """
@@ -43,7 +44,7 @@ class BaseOverlay(_Image, abc.ABC):
     def _expand(self, width):
         #  deprecated: will be removed
         logger.debug("Expanding by margin: {}".format(width))
-        self._feed._expand(width, self._init_colours)
+        self._feed.expand(width, self._init_colours)
 
     def _reduce(self, width):
         #  deprecated: will be removed
@@ -55,7 +56,7 @@ class BaseOverlay(_Image, abc.ABC):
             out_image.append(channel)
         self.image = np.stack(out_image, axis=-1)
 
-    def _to_rgb(self):
+    def to_rgb(self):
         if len(self.image.shape) == 2:
             logger.debug("Cast to RGB from greyscale.")
             return np.stack([self.image.copy() for i in range(3)], axis=-1)

@@ -4,6 +4,7 @@ from brimage.logger import cli_logger
 
 def _run(ginput, omega=0.3, phase=0.5, lowpass=0, pquantize=0, numdevs=0, **kwargs):
     """ run frequency modulation cli script """
+    # pylint: disable=unused-argument, too-many-arguments
     cli_logger.info(
         f"Frequency modulation with omega {omega:.3f}, phase {phase:.3f}, lowpass {lowpass:.3f}, pquantize {pquantize}, numdevs {numdevs}."
     )

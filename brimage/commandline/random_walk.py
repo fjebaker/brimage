@@ -4,6 +4,7 @@ from brimage.logger import cli_logger
 
 def _run(ginput, lines=500, greyscale=False, **kwargs):
     """ run random walk cli script """
+    # pylint: disable=unused-argument
     cli_logger.info(
         "Random walk: drawing {} lines, {} mode.".format(
             lines, "greyscale" if greyscale else "colour"

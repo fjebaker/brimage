@@ -22,6 +22,7 @@ class _Image:
         ax.imshow(self._image, **kwargs)
 
     def save(self, name, **kwargs):
+        # pylint: disable=unused-argument
         im = PILImage.fromarray(np.uint8(self._image))
         im.save(name)
 
@@ -32,7 +33,7 @@ class _Image:
 
     @image.setter
     def image(self, image):
-        if self._image_type and type(image) == self._image_type:
+        if self._image_type and isinstance(image, self._image_type):
             self._image = image
 
             self._update_shape()

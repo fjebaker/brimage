@@ -1,9 +1,10 @@
-from brimage.feeds.base_feed import BaseFeed
+import logging
 
 import PIL
 import numpy as np
 
-import logging
+from brimage.feeds.base_feed import BaseFeed
+
 
 logger = logging.getLogger(__name__)
 
@@ -21,16 +22,16 @@ class GlitchImageFeed(BaseFeed):
     def height(self):
         return self.gimage.height
 
-    def _as_array(self, colourfmt):
+    def as_array(self, colourfmt):
         # override
         return np.array(self.gimage.image.convert(colourfmt))
 
-    def _expand(self, width, colours):
+    def expand(self, width, colours):
         #  deprecated: will be removed
         try:
-            self.gimage.expand(100, colours)
+            self.gimage.expand(width, colours)
         except TypeError:
-            self.gimage.expand(100, "white")
+            self.gimage.expand(width, "white")
 
     def apply(self, new_image):
         self.gimage.image = PIL.Image.fromarray(new_image)

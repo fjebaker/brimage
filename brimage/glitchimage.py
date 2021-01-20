@@ -1,34 +1,30 @@
+import logging
+
+from PIL import Image as PILImage
+import numpy as np
+
 from brimage.glitchcore.image import _Image
 from brimage.feeds import GlitchImageFeed
 
 from brimage.overlays import FreqModOverlay, RandomWalkOverlay
 
-import numpy as np
-
-import logging
-
 logger = logging.getLogger(__name__)
-
-
-try:
-    import Image as PILImage
-except ImportError:
-    from PIL import Image as PILImage
 
 
 class GlitchImage(_Image):
     def __init__(self, *args):
         """ Construct a GlitchImage from either an image path, or a data frame """
+        # pylint: disable=no-else-raise
         super().__init__()
 
         if len(args) > 1:
             raise Exception("Too many arguments provided.")
         else:
             arg = args[0]
-            if type(arg) == str:
+            if isinstance(arg, str):
                 logger.debug("GlitchImage from path {}".format(arg))
                 self._load_from_path(arg)
-            elif type(arg) == np.ndarray:
+            elif isinstance(arg, np.ndarry):
                 logger.debug("GlitchImage from data with shape {}".format(arg.shape))
                 self._load_from_data(arg)
             else:

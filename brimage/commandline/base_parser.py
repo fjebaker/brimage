@@ -1,12 +1,12 @@
 import argparse
 import os
 import time
+import logging
 
 from brimage import VERSION, HEADER
 from brimage.glitchimage import GlitchImage
 from brimage.logger import cli_logger, brimage_logger
 
-import logging
 
 logger = logging.getLogger(__name__)
 

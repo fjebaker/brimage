@@ -1,11 +1,11 @@
+import logging
+
 import numpy as np
 from scipy.signal import butter, filtfilt
 
 from brimage.glitchcore.helper import remap
 from brimage.overlays.base_overlay import BaseOverlay
 from brimage.clib.algorithms import freqmod_row
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -33,8 +33,17 @@ class FreqModOverlay(BaseOverlay):
         self.min_phase = 0
         self.max_phase = 0
 
-    def map_algorithm(self, greyscale=True, numdevs=0, lowpass=0, **kwargs):
+        self.greyscale = False
+        self.omega = 0
+        self.quantization = 0
+
+    def map_algorithm(self, **kwargs):
         """ calculates frequency modulation and imposes it on the return image """
+        # unpack arguments
+        greyscale = kwargs.get("greyscale", True)
+        numdevs = kwargs.get("numdevs", 0)
+        lowpass = kwargs.get("lowpass", 0)
+
         img = self._get_from_feed("RGB")
         self.greyscale = greyscale
         self._set_hyper_parameters(**kwargs)
@@ -106,8 +115,13 @@ class FreqModOverlay(BaseOverlay):
         cutoff = amount * freq_sample
         return _butter_lowpass_filter(row, cutoff, freq_sample, order)
 
-    def _set_hyper_parameters(self, omega=0.1, phase=0.1, quantization=0, **kwargs):
+    def _set_hyper_parameters(self, **kwargs):
         """ sets the necessary phase and omega values """
+        # unpack values
+        omega = kwargs.get("omega", 0.1)
+        phase = kwargs.get("phase", 0.1)
+        quantization = kwargs.get("quantization", 0)
+
         omega = remap(
             omega,
             0,

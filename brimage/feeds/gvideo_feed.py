@@ -20,14 +20,15 @@ class GlitchVideoFeed(BaseFeed):
     def stage(self, frame):
         self._staged_frame = frame
 
-    def _as_array(self, colourfmt):
+    def as_array(self, colourfmt):
         """ Get the next frame of the video stream """
+        # pylint: disable=unused-argument
         return self._staged_frame
 
     def apply(self, new_image):
         """ Save the image frame """
         self._new_frame = new_image
 
-    def _expand(self, width, colours):
+    def expand(self, width, colours):
         #  deprecated: will be removed
         pass

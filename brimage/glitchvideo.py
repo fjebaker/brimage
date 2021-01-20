@@ -1,9 +1,9 @@
+import logging
+
 from brimage.glitchcore.vidio import _VidIO
 from brimage.feeds import GlitchVideoFeed
 
 from brimage.overlays import FreqModOverlay, RandomWalkOverlay
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +16,10 @@ class GlitchVideo(_VidIO):
 
         self.algol_args = []
         self.algol_kwargs = {}
+
+        self._rinit = 0
+        self._ginit = 0
+        self._binit = 0
 
     def set_output(self, path):
         logger.debug("Updated output path to {}".format(path))
@@ -43,7 +47,7 @@ class GlitchVideo(_VidIO):
 
         with self.output(self._out_path) as i_stream:
 
-            for frame, i_time, o_time in i_stream:
+            for frame, i_time, o_time in i_stream:  # pylint: disable=unused-variable
 
                 feed.stage(frame)  #  load frame as next item
 
@@ -53,7 +57,7 @@ class GlitchVideo(_VidIO):
                 )
 
                 # need to call to convert back to rgb but it's also kind of fun to comment this line out ;)
-                new_frame = algorithm._to_rgb()
+                new_frame = algorithm.to_rgb()
 
                 self.save(new_frame)
 

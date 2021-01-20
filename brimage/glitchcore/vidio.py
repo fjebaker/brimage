@@ -1,10 +1,9 @@
 import fractions
 import traceback
 import logging
+import sys
 
 import numpy as np
-
-from brimage.glitchcore.image import _Image
 
 logger = logging.getLogger(__name__)
 
@@ -21,16 +20,20 @@ except ImportError:
         )
     )
 
-    exit(1)
+    sys.exit(1)
 
 
-class _VidIO(_Image):
+class _VidIO:
+    # pylint: disable=too-many-instance-attributes
+
     def __init__(self, path_to_video, num_frames=None, output_framerate=None):
         probe = ffmpeg.probe(path_to_video)
+
         video_stream = next(
             (stream for stream in probe["streams"] if stream["codec_type"] == "video"),
             None,
         )
+
         if video_stream is None:
             logger.warning("No stream found in input video.")
             self.width = 0
@@ -47,10 +50,13 @@ class _VidIO(_Image):
             f"VidIO@{id(self)}: width: {self.width}, height: {self.height}, native_framerate: {self.native_framerate}"
         )
 
-        self._num_frames = num_frames
         self.output_framerate = output_framerate
+
+        self._num_frames = num_frames
         self._path = path_to_video
-        self._out_pipe = ""
+        self._out_path = ""
+        self._in_pipe = None
+        self._out_pipe = None
 
     def set_num_frames(self, num):
         self._num_frames = num
@@ -115,7 +121,7 @@ class _VidIO(_Image):
         )
 
     def __exit__(self, exc_type, exc_value, tb):
-        logger.info("exc_type {}, exc_value {}".format(exc_value, exc_value))
+        logger.info("exc_type {}, exc_value {}".format(exc_type, exc_value))
         if exc_type:
             logger.error(exc_value)
             traceback.print_tb(tb)
